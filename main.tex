@@ -1,35 +1,13 @@
 \documentclass[a4paper,oneside,12pt]{book}
-
-%----------------------------------------------------------------------------------------
-%	README!
-%   Welcome. It's worth having a read through this file
-%   to set up the broad parameters, such as the name of
-%   the degree, the school/department, the type of work
-%   (dissertation/Final Year Project/report, etc. as well
-%   as your own details.
-%----------------------------------------------------------------------------------------
-
-%----------------------------------------------------------------------------------------
-%	COVER PAGE
-%   The cover page is laid out in title/title.tex. You can choose a colour
-%   or black and white logo
-%----------------------------------------------------------------------------------------
-
-%----------------------------------------------------------------------------------------
-%	THESIS INFORMATION
-%   Put title, author name, degree, type of work, school, department in here
-%   It will be used for the title page and for the embedded PDF information
-%----------------------------------------------------------------------------------------
-
 \newcommand{\thesistitle}{A mobile exam proctoring system with deep-learning-based posture analysis} % Your thesis title, this is used in the title and abstract
-\newcommand{\degree}{Master of Science in Computer Science \texorpdfstring{\\} (Future Networked Systems)} % Your degree name, this is used in the title page and abstract
+\newcommand{\degree}{Master of Science in Computer Science \\ (Future Networked Systems)} % Your degree name, this is used in the title page and abstract
 \newcommand{\typeofthesis}{dissertation} % dissertation, Final Year Project, report, etc.
 \newcommand{\authorname}{Tong Ge} % Your name, this is used in the title page and PDF stuff
 \newcommand{\supervisor}{Dr. Ciarán Mc Goldrick} 
 %% Do not put your Student ID in the document, as TCD will not publish
 %% documents that contain both your name and your Student ID.
 
-\newcommand{\keywords}{this, that, more} % Keywords for your thesis
+\newcommand{\keywords}{Deep learning, pose-based features, spatio-temporal features, classification, mobile device, exam proctoring} % Keywords for your thesis
 \newcommand{\school}{\href{http://www.scss.tcd.ie}{School of Computer Science and Statistics}} % Your school's name and URL, this is used in the title page
 
 %% Comment out the next line if you don't want a department to appear
@@ -39,7 +17,7 @@
 \hypersetup{pdftitle=\thesistitle} % Set the PDF's title to your title
 \hypersetup{pdfauthor=\authorname} % Set the PDF's author to your name
 \hypersetup{pdfkeywords=\keywords} % Set the PDF's keywords to your keywords
-\hypersetup{pdfsubject=\degree} % Set the PDF's keywords to your keywords
+% \hypersetup{pdfsubject=\degree} % Set the PDF's keywords to your keywords
 }
 
 %% Language and font encodings
@@ -99,6 +77,13 @@
 \titleformat{\chapter}[hang] 
 {\normalfont\huge\bfseries}{\thechapter}{1cm}{} 
 
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist 
+
+\newenvironment{abstract}%
+    {\begin{center}%
+    \bfseries{Abstract} \end{center}}
+
 \title{\thesistitle}
 \author{\authorname}
 
@@ -114,33 +99,13 @@
 \tableofcontents
 \listoffigures
 \listoftables
-% \newpage
-% \section*{\Huge{Nomenclature}}
-% \begin{tabular}{lp{9cm}l}
-% A&Area of the wing&$m^{2}$\\
-% B\\
-% C& Roman letters first, with capitals\ldots\\
-% a&then lower case.\\
-% b\\
-% c\\
-% $\Gamma$&Followed by Greek capitals\ldots\\
-% $\alpha$&then lower case greek symbols.\\
-% $\beta$\\
-% $\epsilon$\\
-% TLA&Finally, three letter acronyms and other abbreviations arranged alphabetically\\
-% \end{tabular}
-% \vspace{2cm}
-
-% If a parameter has a typical unit that is used throughout your report, then it should be included here on the right hand side.
-
-% If you have a very mathematical report, then you may wish to divide the nomenclature list into functions and variables, and then sub- and super-scripts.
-
-% Note that Roman mathematical symbols are typically in a serif font in italics.
+\input{title/nomenclature.tex}
 
 \mainmatter
 \input{introduction/introduction.tex}
 \input{background/background.tex}
-\input{project/project.tex}
+\input{design/design.tex}
+\input{implementation/implementation.tex}
 \input{evaluation/evaluation.tex}
 \input{conclusion/conclusion.tex}
 \bibliographystyle{unsrtnat}
@@ -148,6 +113,5 @@
 \appendix
 \renewcommand{\thechapter}{A\arabic{chapter}}
 \input{appendix/appendix.tex}
-
 
 \end{document}
