@@ -7,7 +7,7 @@
 %% Do not put your Student ID in the document, as TCD will not publish
 %% documents that contain both your name and your Student ID.
 
-\newcommand{\keywords}{Deep learning, pose-based features, spatio-temporal features, classification, mobile device, exam proctoring} % Keywords for your thesis
+\newcommand{\keywords}{Deep learning, pose-based features, video data, classification, mobile device, exam proctoring} % Keywords for your thesis
 \newcommand{\school}{\href{http://www.scss.tcd.ie}{School of Computer Science and Statistics}} % Your school's name and URL, this is used in the title page
 
 %% Comment out the next line if you don't want a department to appear
@@ -17,7 +17,6 @@
 \hypersetup{pdftitle=\thesistitle} % Set the PDF's title to your title
 \hypersetup{pdfauthor=\authorname} % Set the PDF's author to your name
 \hypersetup{pdfkeywords=\keywords} % Set the PDF's keywords to your keywords
-% \hypersetup{pdfsubject=\degree} % Set the PDF's keywords to your keywords
 }
 
 %% Language and font encodings
@@ -26,43 +25,39 @@
 \usepackage[english]{babel}
 
 %% Bibliographical stuff
-\usepackage[round,sort,comma,numbers]{natbib}
+\usepackage[sort,comma,numbers]{natbib}
 
 %% Document size
 % include showframe as an option if you want to see the boxes
 \usepackage[a4paper,top=2.54cm,bottom=2.54cm,left=3cm,right=2cm,headheight=16pt]{geometry}
 \setlength{\marginparwidth}{2cm}
+\usepackage{url}
+\urlstyle{sf}
+\Urlmuskip=0mu  plus 10mu
+\usepackage[nottoc]{tocbibind}
 %% Useful packages
+\usepackage[newfloat]{minted}
 \usepackage{amsmath}
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
 \usepackage[pdftex]{graphicx}
+\usepackage[usenames,dvipsnames,svgnames,table,xcdraw]{xcolor}
+\usepackage{psfrag,wrapfig}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[colorlinks=true, allcolors=black]{hyperref}
 \usepackage{caption} % if no caption, no colon
+\usepackage[ruled,vlined]{algorithm2e}
 \usepackage{sfmath} %use sans-serif in the maths sections too
 \usepackage[parfill]{parskip}    % Begin paragraphs with an empty line rather than an indent
 \usepackage{setspace} % to permit one-and-a-half or double spacing
 \usepackage{enumerate} % fancy enumerations like (i) (ii) or (a) (b) and suchlike
 \usepackage{booktabs} % To thicken table lines
+\usepackage{titletoc}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{supertabular}
 \usepackage{fancyhdr}
 
-\pagestyle{plain} % Embrace simplicity!
-
-%% The Mechanical engineers require your name and ID on the top of every page.
-%% Uncomment the following block if you want your name and ID at the top of
-%% (almost) every page.
-
-%\pagestyle{fancy}
-%\fancyhf{} % sets both header and footer to nothing
-%\renewcommand{\headrulewidth}{0pt}
-%\cfoot{\thepage}
-%\ifdefined\authorid
-%\chead{\it \authorname\ (\authorid)}
-%\else
-%\chead{\it \authorname}
-%\fi
-%% End of block
-
+\pagestyle{plain}
 %% It is not a requirement of the university that the font should be sans-serif, but
 %% the Mechanical engineers require it. Comment out the following line to disable it
 % \renewcommand{\familydefault}{\sfdefault} %use the sans-serif font as default
@@ -74,44 +69,75 @@
 
 %% Format Chapter headings appropriately
 \usepackage{titlesec}
-\titleformat{\chapter}[hang] 
+\titleformat{\chapter}[hang]
 {\normalfont\huge\bfseries}{\thechapter}{1cm}{} 
 
 \def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
-\let\endchangemargin=\endlist 
+\let\endchangemargin=\endlist
 
 \newenvironment{abstract}%
     {\begin{center}%
     \bfseries{Abstract} \end{center}}
-
+    
+\usepackage{lipsum}
+\usepackage{draftwatermark}
+\SetWatermarkText{DRAFT}
+\SetWatermarkScale{1}
+    
+\titlecontents{chapter}
+[0pt]             % left margin
+{\vspace{4pt}}    % above code
+{\textsc{\bfseries\thecontentslabel.}~}
+{}             % unnumbered format
+{\titlerule*[6pt]{}\contentspage}
+\titlecontents{section}
+[.5cm]             % left margin
+{\vspace{4pt}}    % above code
+{{\bfseries\thecontentslabel}~} % numbered format
+{}             % unnumbered format
+{\titlerule*[6pt]{.}\contentspage}
+\titlecontents{subsection}
+[1.2cm]             % left margin
+{\vspace{4pt}}    % above code
+{{\bfseries\thecontentslabel}~} % numbered format
+{}             % unnumbered format
+{\titlerule*[6pt]{.}\contentspage}
 \title{\thesistitle}
 \author{\authorname}
 
 \frontmatter
 \begin{document}
-\input{title/title.tex}
+\addtocontents{toc}{\vspace*{-1cm}}
+\input{title/title}
 \pagenumbering{roman}
-\input{title/declaration.tex}
-\input{title/ack.tex}
-\input{title/abstract.tex}
-%\onehalfspacing\raggedright %\raggedright turns off justification and hypenation
+\input{title/declaration}
+\input{title/ack}
+\input{title/abstract}
 
 \tableofcontents
+\newpage
 \listoffigures
+\newpage
 \listoftables
-\input{title/nomenclature.tex}
+\input{title/nomenclature}
 
 \mainmatter
-\input{introduction/introduction.tex}
-\input{background/background.tex}
-\input{design/design.tex}
-\input{implementation/implementation.tex}
-\input{evaluation/evaluation.tex}
-\input{conclusion/conclusion.tex}
+\input{introduction/introduction} % 5 pages
+\input{literature/literature} % 15 pages
+\input{design/design} % 8 pages
+\input{implementation/implementation} % 10 pages
+\input{evaluation/evaluation} % 10 pages
+\input{conclusion/conclusion} % 2 pages
+\newpage
+\nocite{*}
+% \footnotesize{
 \bibliographystyle{unsrtnat}
-\bibliography{bibs/sample}
+\bibliography{bibs/background, bibs/prevResearch, bibs/deepModel, bibs/mobileOptimus, bibs/impletEval, bibs/misc}
+% }
 \appendix
-\renewcommand{\thechapter}{A\arabic{chapter}}
-\input{appendix/appendix.tex}
+\renewcommand{\thechapter}{Appendix~\Alph{chapter}}
+\renewcommand\thefigure{\Alph{chapter}\arabic{figure}}
+\renewcommand\thetable{\Alph{chapter}\arabic{table}}
+\input{appendix/appendix}
 
 \end{document}
