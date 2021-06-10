@@ -1,3 +1,5 @@
+% !TeX program = XeLaTeX
+% !TeX encoding = UTF-8
 \documentclass[a4paper,oneside,12pt]{book}
 \newcommand{\thesistitle}{A mobile exam proctoring system with deep-learning-based posture analysis} % Your thesis title, this is used in the title and abstract
 \newcommand{\degree}{Master of Science in Computer Science \\ (Future Networked Systems)} % Your degree name, this is used in the title page and abstract
@@ -20,26 +22,32 @@
 }
 
 %% Language and font encodings
-\usepackage[T1]{fontenc} 
-\usepackage[utf8]{inputenc}
+% \usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setCJKmainfont{IPAMincho}
+\setCJKsansfont{IPAGothic}
+\setCJKmonofont{IPAGothic}
 %% Bibliographical stuff
-\usepackage[sort,comma,numbers]{natbib}
-
+% \usepackage[sort,comma,numbers]{natbib}
+\usepackage[style=numeric, bibencoding=utf8, natbib=true, backend=biber, sorting=none]{biblatex}
+\setcounter{biburllcpenalty}{7000}
+\setcounter{biburlucpenalty}{8000}
 %% Document size
 % include showframe as an option if you want to see the boxes
 \usepackage[a4paper,top=2.54cm,bottom=2.54cm,left=3cm,right=2cm,headheight=16pt]{geometry}
 \setlength{\marginparwidth}{2cm}
 \usepackage{url}
 \urlstyle{sf}
-\Urlmuskip=0mu  plus 10mu
+\Urlmuskip=0mu plus 10mu
 \usepackage[nottoc]{tocbibind}
 %% Useful packages
 \usepackage[newfloat]{minted}
 \usepackage{amsmath}
-\usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
-\usepackage[pdftex]{graphicx}
+\usepackage[strict,autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
+\usepackage{graphicx}
 \usepackage[usenames,dvipsnames,svgnames,table,xcdraw]{xcolor}
 \usepackage{psfrag,wrapfig}
 \usepackage[colorinlistoftodos]{todonotes}
@@ -64,6 +72,11 @@
 
 %% If you're not using sans-serif, consider using Palatino instead of the LaTeX standard
 \usepackage{mathpazo} % Use the Palatino font by default if you prefer it to Computer Modern
+\setmainfont
+     [ BoldFont       = texgyrepagella-bold.otf ,
+       ItalicFont     = texgyrepagella-italic.otf ,
+       BoldItalicFont = texgyrepagella-bolditalic.otf ]
+     {texgyrepagella-regular.otf}
 
 \renewcommand{\theequation}{\arabic{equation}} %% use continuous equation numbers
 
@@ -105,6 +118,13 @@
 \title{\thesistitle}
 \author{\authorname}
 
+\addbibresource{bibs/background.bib}
+\addbibresource{bibs/prevResearch.bib}
+\addbibresource{bibs/deepModel.bib}
+\addbibresource{bibs/mobileOptimus.bib}
+\addbibresource{bibs/impletEval.bib}
+\addbibresource{bibs/misc.bib}
+
 \frontmatter
 \begin{document}
 \addtocontents{toc}{\vspace*{-1cm}}
@@ -131,8 +151,9 @@
 \newpage
 \nocite{*}
 % \footnotesize{
-\bibliographystyle{unsrtnat}
-\bibliography{bibs/background, bibs/prevResearch, bibs/deepModel, bibs/mobileOptimus, bibs/impletEval, bibs/misc}
+% \bibliographystyle{unsrtnat}
+% \bibliography{bibs/background, bibs/prevResearch, bibs/deepModel, bibs/mobileOptimus, bibs/impletEval, bibs/misc}
+\printbibliography
 % }
 \appendix
 \renewcommand{\thechapter}{Appendix~\Alph{chapter}}
