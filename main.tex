@@ -24,12 +24,13 @@
 %% Language and font encodings
 % \usepackage[T1]{fontenc}
 %\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
+\usepackage[british]{babel}
 \usepackage{fontspec}
 \usepackage{xeCJK}
 \setCJKmainfont{IPAMincho}
 \setCJKsansfont{IPAGothic}
 \setCJKmonofont{IPAGothic}
+\usepackage{microtype}
 %% Bibliographical stuff
 % \usepackage[sort,comma,numbers]{natbib}
 \usepackage[style=numeric, bibencoding=utf8, natbib=true, backend=biber, sorting=none]{biblatex}
@@ -132,8 +133,8 @@
 \input{title/title}
 \pagenumbering{roman}
 \input{title/declaration}
-\input{title/ack}
 \input{title/abstract}
+\input{title/ack}
 
 \tableofcontents
 \newpage
@@ -143,10 +144,10 @@
 \input{title/nomenclature}
 
 \mainmatter
-% \onehalfspacing
-\input{introduction/introduction} % 5 pages
-\input{literature/literature} % 15 pages
-\input{design/design} % 8 pages
+\onehalfspacing
+\input{introduction/introduction} % 4 pages
+\input{literature/literature} % 18 pages
+\input{design/design} % 6 pages
 \input{implementation/implementation} % 10 pages
 \input{evaluation/evaluation} % 10 pages
 \input{conclusion/conclusion} % 2 pages
