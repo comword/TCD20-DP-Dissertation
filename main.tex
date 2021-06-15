@@ -147,16 +147,14 @@
 \onehalfspacing
 \input{introduction/introduction} % 4 pages
 \input{literature/literature} % 18 pages
-\input{design/design} % 6 pages
-\input{implementation/implementation} % 10 pages
+\input{design/design} % 8 pages
+\input{implementation/implementation} % 8 pages
 \input{evaluation/evaluation} % 10 pages
 \input{conclusion/conclusion} % 2 pages
 \newpage
 \nocite{*}
-% \footnotesize{
-% \bibliographystyle{unsrtnat}
-% \bibliography{bibs/background, bibs/prevResearch, bibs/deepModel, bibs/mobileOptimus, bibs/impletEval, bibs/misc}
-\printbibliography
+\emergencystretch=1em
+\printbibliography[heading=bibintoc]
 % }
 \appendix
 \renewcommand{\thechapter}{Appendix~\Alph{chapter}}
