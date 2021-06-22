@@ -7,7 +7,7 @@ To study the feasibility of this project, and to utilise deep learning methods t
 \begin{minipage}[ht]{.48\textwidth}
     \begin{figure}[H]
         \centering
-        \includegraphics{literature/imgs/1-video-volume.pdf}
+        \includegraphics[scale=0.9]{literature/imgs/1-video-volume.pdf}
         \caption{Cubic volume of video data}
         \label{fig:1-video-volume}
     \end{figure}
@@ -28,17 +28,23 @@ As a result, video can be simplified into a series of images to enable applying 
 
 %Characteristics of human pose-based features
 In each static image containing human pose-based features, what features can be used for posture analysis to classify each image? 
-\citet{thrasher2011mood} model the features worthy of attention in human upper body posture and conduct pose-based study on mood recognition.
+\citet{thrasher2011mood} model the features worthy of attention in human upper body poses and then conduct a pose-based study on mood recognition by analysing and rating the postures of the head, shoulders, trunk, arms in video data.
+The dataset in their research is closely analogous to the dataset in this research because both datasets comprise human facial expressions and upper body poses.
 
 %Link pose-based and video-based features
-From posture analysis in single imagery to human activity recognition in sequential imagery, it combines pose-based features and video-based data.
+From posture analysis in a single image to human action recognition in sequential images, it combines pose-based features and video-based data.
 For example, \citet{yao2016spatio} propose a paper on spatio-temporal feature extraction with a variety of application scenarios in automatic human activity recognition, such as video information retrieval, intelligent surveillance, and human-computer interaction.
-In future research, they will enable the low-level engineered features to fuse with a deep learning framework.
+In future research, they point out that deep learning can be a powerful tool for processing these spatio-temporal features and thus will enable the low-level engineered features to fuse with a deep learning framework.
 
-\citet{schuldt2004recognizing}
+Before deep learning methods are prevalent in the computer vision field, some previous studies have built data sets for the human action recognition task and have conducted studies with classic machine learning methods.
 
-\citet{gorelick2007actions}
+Support vector machines (SVM), a well-known classic machine learning method, has been applied in many researches related to human action recognition.
+For example, \citet{schuldt2004recognizing} extract local events such as size, frequency and velocity of moving patterns from videos and create a new video database, KTH dataset \footnote{Recognition of human actions: \url{https://www.csc.kth.se/cvap/actions/}}, to evaluate the proposed human actions classification with the SVM method.
+Using the SVM method, they carefully model the data representation based on local spatio-temporal features and select appropriate features, kernel tricks, and hyperparameters to obtain the desired results.
+%\citet{gorelick2007actions}
 
-\citet{marszalek2009actions}
+Further, \citet{marszalek2009actions} believes that human actions are highly correlated with background scenes, which means the context of the scene can help identify human actions in videos.
+They creatively use movie scripts and movie videos, Hollywood-2 dataset \footnote{Human Actions and Scenes Dataset: \url{https://www.di.ens.fr/~laptev/actions/hollywood2/}}, to train ``a joint scene-action SVM-based classifier'' with script-to-video alignment.
+They explained in detail how to get aligned target actions and target scenes from movies and also used $\mathcal{X}^2$ kernel function in SVM classifier, similar to the research by \citet{schuldt2004recognizing}.
 
 \citet{Soomro2014}
