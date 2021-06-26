@@ -1,13 +1,19 @@
-\subsection{Online exam security system}
+\section{Online exam security system}
 \label{sec:Online exam security system}
 % 1 pages
-Before the COVID-19 pandemic, the technology of paperless testing through computer systems has been widely used. % programming exams, TOEFL
+In order to learn about the background of the security system of remote exams and propose a new system that better adapts to the status quo, this research reviews the previous research on the security system of online exams in this section.
 
-Most of the previous researches made a hypothesis that the examination can still be organized in a room for students, so that the research direction of examination safety is focused on biometric authentication, without considering the fact that this hypothesis is not valid.
+Before the COVID-19 pandemic, the technology of paperless testing through computer systems has been widely used. For example, TOEFL iBT (Internet-based test) has gradually replaced the PBT (paper-based test) by using the Internet and computers for paperless exams from late 2005.
+Another example is specific exams that are impossible to be sat on paper, such as programming competitions or exams requiring running compilers.
+Although all these exams were in the form of using computers and the Internet, students were required to congregate in testing centers.
+
 % Authentication
-\citet{traore2017ensuring}
+As a result, most of the previous research in this field assumes that the exam can still be organised in test centres, so the research direction of exam security focusing on biometric authentication. For example, \citet{traore2017ensuring} propose a multi-modal biometric authentication framework, including face biometric and dynamic biometric from computer input devices, such as mouse and keyboard. The purpose of biometric authentication is to prevent imposters in the exam, and the invigilators of the test centre should detect other cheating in time.
 
-\citet{Akiko202144107}
+Nowadays, the pandemic segregates students at home for remote exams, invalidating the previous assumption. There are still some studies proposing new solutions for biometric authentication in exams. 
+In Japan, \citet{Akiko202144107} propose a new continuous biometric authentication method based on hand image features, which can prevent cheating, especially impersonation due to lack of invigilation. 
+They use a mirror and a wide-angle lens to capture the images of students' hands when they take the exam and obtain the contour features of the hands through image processing.
+However, any biometric authentication cannot prevent cheating by the students per se, such as using mobile phones to search online or seeking help from others.
 
 \citet{garg2020convolutional}
 
