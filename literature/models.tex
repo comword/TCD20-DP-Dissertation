@@ -1,13 +1,22 @@
 \section{Deep models detail}
 \label{sec:Deep models detail}
 % 7 pages
-The research of deep learning is a hot topic in the field of contemporary computer science, and it is also an important method used in the computer vision task in this research.
+Machine learning is a branch of artificial intelligence. Deep learning is also a branch of machine learning, which utilises artificial neural networks for feature learning and hierarchical feature extraction to replace manual feature engineering in other machine learning methods.
+Recently, the research of deep learning is a hot topic in the field of computer science, and it is also an important method used in the computer vision task in this research.
 This section will introduce the details of a variety of deep learning models related to this research, including CNN, RNN, attention and Transformer structures.
 Although the applications or target tasks of these models are different, the design ideas between them are mutually influential.
+Therefore, reviewing the development and design concepts of these previous models will greatly help the design of the model in this research.
 \subsection{Convolutional neural network}
-\citet{fukushima1980neocognitron}
+With the rapid development of neurobiology and cognitive science, the concept of artificial neural networks, a computational model that imitates the structure and function of biological neural networks, has been proposed as early as the last century.
+\citet{fukushima1980neocognitron} proposes a network created from the animal visual system as well as some key concepts, such as \textbf{local receptive field}, \textbf{multi-layer perception architecture} and translation \textbf{equivariance and invariance property} (not affected by shift in position).
 
-\citet{zhang1988shift}
+In detail, the local receptive field means that each neuron will not perceive the image as a whole, it will only perceive the local information, then the local perception can be integrated through a multi-layer perception architecture to obtain the global perception.
+On the other hand, the property of translation equivariance and invariance is emerging from the combination of the local receptive field and multi-layer perception architecture.
+
+The study of neurobiology and cognitive science is then evolved into a computational model. For example, \citet{zhang1988shift} propose the first two-dimensional Shift Invariant Artificial Neural Network (SIANN).
+Then, \citet{lecun1989backpropagation} propose a original CNN with two convolutional layers and two fully connected layers using backpropagation method to train in a supervised learning approach.
+They also highlight the term convolution for the first time, and named this model type as convolutional neural network (CNN).
+Soon after the application of this model in handwritten zip code recognition, \citet{zhang1994computerized} apply it to a practical case of recognising medical imagery.
 
 \begin{figure}[ht!]
     \centering
@@ -16,7 +25,29 @@ Although the applications or target tasks of these models are different, the des
     \label{fig:ext-lecun-cnn-arch}
 \end{figure}
 
-\citet{lecun2010convolutional}
+The most revolutionary progress is that \citet{lecun2010convolutional} propose a modern architecture for this model, as illustrated in figure \ref{fig:ext-lecun-cnn-arch}.
+This structure comprises three convolutional layers combined in between with two sub-sampling layers, and two fully connected layers. Sub-sampling, also known as pooling, reduces the size of feature maps, by retaining only important information to simplify calculation.
+Further, it further strengthens the translation invariance, taking maximum pooling as example, because the translation does not affect the maximum value, the pooling result remains unchanged.
+
+\citet{he2015deep}
+
+\begin{minipage}[ht]{.62\textwidth}
+    \begin{figure}[H]
+        \centering
+    \includegraphics[width=.99\textwidth]{literature/imgs/ext-CNN-ResNet.pdf}
+    \caption{VGG and Residual ImageNet by \citet{he2015deep}}
+    \label{fig:ext-CNN-ResNet}
+    \end{figure}
+\end{minipage}
+\hspace{1em}
+\begin{minipage}[ht]{.32\textwidth}
+    \begin{figure}[H]
+        \centering
+    \includegraphics[width=.99\textwidth]{literature/imgs/ext-CNN-ResNet-BBs.pdf}
+    \caption{Residual building blocks by \citet{he2015deep}}
+    \label{fig:ext-CNN-ResNet-BBs}
+    \end{figure}
+\end{minipage}
 
 \citet{gu2018recent}
 
