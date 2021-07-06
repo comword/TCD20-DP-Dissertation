@@ -51,7 +51,8 @@ The first typical block just uses cross-layer connection, a linear layer from in
 By denoting the desired underlying mapping as $H(x)$, the each layer learns the residual between input $x$ and desired output $F(x):=H(x)-x$.
 As a result, such a residual structure allows the deep network to adapt to the appropriate depth, i.e., use the identity transform across unnecessary layers.
 
-Further, figure \ref{fig:ext-CNN-ResNet} compares the network structure of VGG-19, 34-layer plain, and 34-layer residual and shows how to use the building block in the actual deep network. Figure \ref{fig:ext-CNN-ResNet-BBs} also shows a ``bottleneck'' building block for deeper ResNets, which first uses a $1\times1$ size convolution to reduce the dimensional across channels to reduce the calculation required in the $3\times3$ convolution.
+Further, figure \ref{fig:ext-CNN-ResNet} compares the network structure of VGG-19, 34-layer plain, and 34-layer residual and shows how to use the building block in the actual deep network. 
+Figure \ref{fig:ext-CNN-ResNet-BBs} also shows a ``bottleneck'' building block for deeper ResNets, which first uses a $1\times1$ size convolution to reduce the dimensional across channels to reduce the calculation required in the $3\times3$ convolution.
 
 \begin{minipage}[ht]{.32\textwidth}
     \begin{figure}[H]
@@ -72,7 +73,21 @@ Further, figure \ref{fig:ext-CNN-ResNet} compares the network structure of VGG-1
 \end{minipage}
 
 \subsection{Recurrent neural network} % 2.5 pages
-\citet{jordan1997serial}
+CNN solves the spatial problem of imagery and has been widely used in the field of computer vision, but it is powerless for data with time-series features.
+For example, it is necessary to understand the words sequentially in sentences in natural language processing tasks.
+And in understanding videos, it is necessary to understand the relationship between frames.
+In these tasks, a recurrent neural network (RNN) is essential to process the time-series features.
+
+\citet{jordan1986serial} proposes the Jordan network, by introducing a recurrent connection that feeds back the output of the whole network to the input layer after a time delay. 
+Later in 1990, \citet{elman1990finding} formally defines the RNN model.
+The output of each recurrent layer sends to the subsequent layers and feeds back to the input of the layer after a time delay.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=\textwidth]{literature/imgs/2-RNN-unfold.pdf}
+    \caption{RNN structure unfolded and bidirectional RNN}
+    \label{fig:2-RNN-unfold}
+\end{figure}
 
 %LSTM
 \citet{hochreiter1997long}
@@ -82,6 +97,13 @@ Further, figure \ref{fig:ext-CNN-ResNet} compares the network structure of VGG-1
 
 %GRU
 \citet{chung2014empirical}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=.9\textwidth]{literature/imgs/ext-LSTM-GRU.png}
+    \caption{LSTM and GRU structure comparison by \citet{phi2018illustrated}}
+    \label{fig:ext-LSTM-GRU}
+\end{figure}
 
 Sequential computing restriction and long-term memory loss issues.
 
