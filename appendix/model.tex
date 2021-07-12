@@ -1,0 +1,87 @@
+\makeatletter
+\let\savedchap\@makechapterhead
+\def\@makechapterhead{\vspace*{-2cm}\savedchap}
+\chapter{Model structure}
+\let\@makechapterhead\savedchap
+\makeatother
+\vspace*{-3em}
+\setlength\LTleft{-1em}
+\begin{longtable}{llll}
+\toprule
+                       Name &                   Type &                           Output Shape &  Param \# \\
+\midrule
+\multicolumn{4}{c}{Images input as the shape $(Batch, Channel, Frame, Height, Width)$} \\ \midrule
+                    input\_1 &             InputLayer &              ?, 3, 25, 224, 224 &        0 \\
+         tf.compat.v1.shape &             TFOpLambda &                                   5, &        0 \\
+   tf.\_\_operators\_\_.getitem &        SlicingOpLambda &                                      &        0 \\
+ tf.\_\_operators\_\_.getitem\_2 &        SlicingOpLambda &                                      &        0 \\
+     tf.compat.v1.transpose &             TFOpLambda &                ?, 25, 224, 224, 3 &        0 \\
+           tf.math.multiply &             TFOpLambda &                                      &        0 \\
+ tf.\_\_operators\_\_.getitem\_3 &        SlicingOpLambda &                                      &        0 \\
+ tf.\_\_operators\_\_.getitem\_4 &        SlicingOpLambda &                                      &        0 \\
+ tf.\_\_operators\_\_.getitem\_1 &        SlicingOpLambda &                                      &        0 \\
+                 tf.reshape &             TFOpLambda &               ?, ?, ?, ? &        0 \\
+\midrule
+\multicolumn{4}{c}{Images processed to $(Batch \times Frame, Height, Width, Channel)$} \\ \midrule
+             efficientnetb0 &             Functional &                     ?, 7, 7, 1280 &  4049571 \\
+   global\_average\_pooling2d & GlobalAveragePooling2D &                           ?, 1280 &        0 \\
+                    dropout &                Dropout &                           ?, 1280 &        0 \\
+                      dense &                  Dense &                            ?, 384 &   491904 \\
+\midrule
+\multicolumn{4}{c}{The CNN-based backbone(EfficientNet-B0) outputted extracted features} \\
+\multicolumn{4}{c}{The frame indices input as the shape $(Batch, Index)$, add position embedding} \\ \midrule
+                    input\_2 &             InputLayer &                           ?, 25 &        0 \\
+               tf.reshape\_1 &             TFOpLambda &                     ?, ?, ? &        0 \\
+         tf.compat.v1.pad\_2 &             TFOpLambda &                             ?, 26 &        0 \\
+       tf.compat.v1.shape\_1 &             TFOpLambda &                                   3, &        0 \\
+                  tf.cast\_2 &             TFOpLambda &                             ?, 26 &        0 \\
+ tf.\_\_operators\_\_.getitem\_6 &        SlicingOpLambda &                                      &        0 \\
+ tf.\_\_operators\_\_.getitem\_5 &        SlicingOpLambda &                                      &        0 \\
+ tf.\_\_operators\_\_.getitem\_7 &        SlicingOpLambda &                                      &        0 \\
+           tf.math.floormod &             TFOpLambda &                             ?, 26 &        0 \\
+                   tf.zeros &             TFOpLambda &                           ?, ? &        0 \\
+            tf.broadcast\_to &             TFOpLambda &                         ?, 1, 384 &        0 \\
+       tf.compat.v1.shape\_3 &             TFOpLambda &                                   2, &        0 \\
+           tf.compat.v1.pad &             TFOpLambda &                           ?, ? &        0 \\
+                  tf.concat &             TFOpLambda &                      ?, ?, 384 &        0 \\
+ tf.\_\_operators\_\_.getitem\_9 &        SlicingOpLambda &                                      &        0 \\
+   tf.compat.v1.transpose\_1 &             TFOpLambda &                           ?, ? &        0 \\
+                    tf.ones &             TFOpLambda &                           ?, ? &        0 \\
+          tf.broadcast\_to\_1 &             TFOpLambda &                              ?, 1 &        0 \\
+         tf.math.subtract\_1 &             TFOpLambda &                                      &        0 \\
+       tf.compat.v1.shape\_2 &             TFOpLambda &                                   3, &        0 \\
+                    tf.cast &             TFOpLambda &                           ?, ? &        0 \\
+                tf.concat\_1 &             TFOpLambda &                           ?, ? &        0 \\
+                 tf.zeros\_2 &             TFOpLambda &                           ?, ? &        0 \\
+ tf.\_\_operators\_\_.getitem\_8 &        SlicingOpLambda &                                      &        0 \\
+                   tf.where &             TFOpLambda &                           ?, ? &        0 \\
+         tf.compat.v1.pad\_3 &             TFOpLambda &                           ?, ? &        0 \\
+           tf.math.subtract &             TFOpLambda &                                      &        0 \\
+          tf.math.not\_equal &             TFOpLambda &                           ?, ? &        0 \\
+   tf.compat.v1.transpose\_3 &             TFOpLambda &                           ?, ? &        0 \\
+                 tf.zeros\_1 &             TFOpLambda &                           ?, ? &        0 \\
+                  tf.cast\_3 &             TFOpLambda &                           ?, ? &        0 \\
+                  tf.cast\_4 &             TFOpLambda &                           ?, ? &        0 \\
+         tf.compat.v1.pad\_1 &             TFOpLambda &                           ?, ? &        0 \\
+        tf.\_\_operators\_\_.eq &             TFOpLambda &                           ?, ? &        0 \\
+                 tf.where\_1 &             TFOpLambda &                             ?, 26 &        0 \\
+   tf.compat.v1.transpose\_2 &             TFOpLambda &                           ?, ? &        0 \\
+                 tf.where\_2 &             TFOpLambda &                             ?, 26 &        0 \\
+                  tf.cast\_1 &             TFOpLambda &                           ?, ? &        0 \\
+\midrule
+\multicolumn{4}{c}{Extracted features, attention mask, and position embedding input to the Transformer} \\
+\midrule
+      vtn\_distil\_bert\_layer &     VTNDistilBertLayer & ?, 26, 384 & 14532608 \\
+tf.\_\_operators\_\_.getitem\_10 &        SlicingOpLambda &                            ?, 384 &        0 \\
+\midrule
+\multicolumn{4}{c}{MLP head to output the classification} \\
+\midrule
+                    dense\_1 &                  Dense &                            ?, 384 &   147840 \\
+                  dropout\_8 &                Dropout &                            ?, 384 &        0 \\
+                    dense\_2 &                  Dense &                             ?, 16 &     6160 \\
+\midrule
+\multicolumn{4}{l}{Total params: 19,228,467} \\
+\multicolumn{4}{l}{Trainable params: 19,186,444} \\
+\multicolumn{4}{l}{Non-trainable params: 42,023} \\
+\bottomrule
+\end{longtable}
