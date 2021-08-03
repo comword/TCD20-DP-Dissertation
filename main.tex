@@ -98,9 +98,15 @@
     \bfseries{Abstract} \end{center}}
     
 \usepackage{lipsum}
-\usepackage{draftwatermark}
-\SetWatermarkText{DRAFT}
-\SetWatermarkScale{1}
+% \usepackage{draftwatermark}
+% \SetWatermarkText{DRAFT}
+% \SetWatermarkScale{1}
+\newcommand*{\eqcite}[1]{%
+  \vadjust{%
+    \smallskip
+    \hbox to \linewidth{\hfill\citet{#1}}%
+  }%
+}
     
 \titlecontents{chapter}
 [0pt]             % left margin
