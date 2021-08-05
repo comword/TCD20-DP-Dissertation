@@ -2,10 +2,10 @@
 CNN solves the spatial problem of imagery and has been widely used in the field of computer vision, but it is powerless for data with time-series features.
 For example, it is necessary to understand the words sequentially in sentences in natural language processing tasks.
 And in understanding videos, it is necessary to understand the relationship between frames.
-In these tasks, a recurrent neural network (RNN) is essential to process the time-series features.
+In these tasks, the recurrent neural network (RNN) emerged to process the time-series features.
 
-\citet{jordan1986serial} proposes the Jordan network, by introducing a recurrent connection that feeds back the output of the whole network to the input layer after a time delay.
-Later in 1990, \citet{elman1990finding} formally defines the recurrent neural network model, in which the output of each recurrent hidden layer goes to the subsequent layers and feeds back to the input of the layer after a time delay.
+\citet{jordan1986serial} proposed the Jordan network, by introducing a recurrent connection that feeds back the output of the whole network to the input layer after a time delay.
+Later in 1990, \citet{elman1990finding} formally defined the recurrent neural network model, in which the output of each recurrent hidden layer goes to the subsequent layers and feeds back to the input of the layer after a time delay.
 The first figure on the left in Figure \ref{fig:2-RNN-unfold} shows the structure of the simplest recurrent network, with an input-output and a hidden layer, denoted as $x$, $y$ and $h$, where the arrows indicate the flow of data.
 
 The middle unfolded RNN figure shows the sequential structures by unfolding inputs and outputs of the network in chronological order. 
@@ -20,7 +20,7 @@ For tasks requiring two-way dependencies, such as natural language processing, e
 \end{figure}
 
 %LSTM
-However, \citet{hochreiter1997long} points out that simple RNN tends to only keep short-term memory and is prone to lose long-term memory, because the same weight of the network is shared at all time steps, and the final gradient tends to disappear after multiple time steps, proved by Hochreiter's analysis.
+However, \citet{hochreiter1997long} pointed out that simple RNN tends to only keep short-term memory and is prone to lose long-term memory, because the same weight of the network is shared at all time steps, and the final gradient tends to disappear after multiple time steps, proved by Hochreiter's analysis.
 
 \begin{equation}
     \frac{\partial \vartheta_{v}(t-q)}{\partial \vartheta_{u}(t)}=\sum_{l_{1}=1}^{n} \ldots \sum_{l_{q-1}=1}^{n} \prod_{m=1}^{q} f_{l_{m}}^{\prime}\left(n e t_{l_{m}}(t-m)\right) w_{l_{m} l_{m-1}}
@@ -31,7 +31,7 @@ However, \citet{hochreiter1997long} points out that simple RNN tends to only kee
 Formula \ref{equ:2-RNN-loss-scaled} shows that the back-propagation gradient in simple RNN is equal to the product of the gradients of each time step after multi-step propagation.
 An intuitive explanation is that the gradient is mainly dominated by the short-distance gradient, and thus it is difficult for the model to learn long-distance dependence.
 
-Long-short-term memory (LSTM) is proposed to solve the problem that the simple RNN cannot learn long-term dependence by introducing a separated cell state $C_t$ to keep long-term memory. And later on, \citet{Gers2000LearningTF} introduce I/O gates, a forget gate to control loss or keep memory in cell state, resulted in the modern LSTM cell structure shown in the left of Figure \ref{fig:ext-LSTM-GRU}.
+Long-short-term memory (LSTM) was proposed to solve the problem that the simple RNN cannot learn long-term dependence by introducing a separated cell state $C_t$ to keep long-term memory. And later on, \citet{Gers2000LearningTF} introduced I/O gates, a forget gate to control loss or keep memory in cell state, resulted in the modern LSTM cell structure shown in the left of Figure \ref{fig:ext-LSTM-GRU}.
 
 \begin{figure}[ht!]
     \centering
