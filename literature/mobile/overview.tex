@@ -1,0 +1,17 @@
+\subsection{Mobile optimisation overview}
+In order to run deep learning models on mobile devices, it is necessary to understand the target platforms.
+\citet{deng2019deep} investigated the support of the mobile hardware architecture and mobile operating system for deep learning, as well as the status quo of mobile deep learning frameworks, such as Tensorflow Lite, CoreML and etc.
+Then he explained the model compression techniques such as algorithmic optimisation and joint software-hardware co-design.
+
+In 2020, \citet{chen2020deep} conducted an in-depth survey of the important compression and acceleration techniques on mobile devices, and classified them into ``pruning, quantisation, model distillation, network design strategies, and low-rank factorisation.''
+Pruning and quantisation are the two techniques for compressing model parameters to save storage, while model distillation, network design strategies are the two techniques for improving the inference speed of model.
+
+In detail, pruning is a compression technique to trim unimportant weights in models, then achieve model sparsity to allow compression algorithms to become more effective and reduce the storage cost.
+This compression technique may also bring about little speed increase, because some unnecessary residual paths may be short-circuited.
+Another model compression technique is quantisation that directly lower the precision of the model parameters, e.g. use 16-bit float instead of 32-bit float.
+The process can be carried out in the model deployment and conversion even after the training is completed.
+These two compression technologies may bring uncertain and insignificant acceleration, so the improvement of model calculation performance mainly depends on model distillation and network design strategies.
+
+The idea of model distillation derived from transfer learning that has a two-step training process, that firstly pre-train the model on a large data set and then fine-tuning the pre-trained model on another smaller data set.
+Model distillation process has similar ideas that transfer dark knowledge from a larger teacher network to train a smaller student network.
+In this way, it convert a large network into a small network and retain the performance close to the large teacher network.

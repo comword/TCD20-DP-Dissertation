@@ -60,19 +60,32 @@ The result from softmax activation is normalised probabilities representing the 
     \label{fig:ext-attention_map_portuguese}
 \end{figure}
 
-The idea behinds multi-head attention is like using multiple kernels in CNN to capture different features.
+The idea behind multi-head attention is analogous in using multiple kernel filters in CNN to help the network capture richer feature sub-spaces on different aspects of data.
+Figure \ref{fig:ext-attention-multihead} illustrates the structure of the multi-head attention. It contains linear layers at inputs and the output, $h$ times the scaled dot-product attention computation process, and a concatenation layer that combines the outputs of each scaled dot-product attention.
 
-%Transformer
-While convolutional neural network (CNN) is in the ascendant among the fields of computer vision, transformer model composed of self-attention structures has achieved state-of-the-art results in many natural language processing tasks.
+The building block in the Transformer consists only of multi-head attention and feed-forward network and does not contain any convolution or recurrent structure.
+These building blocks are stacked in multiple layers and connected in residuals to form an Encoder-Decoder structure that is the Transformer model shown in Figure \ref{fig:ext-transformer}.
 
-\citet{devlin2019bert}
+Another detail worth mentioning in the Figure \ref{fig:ext-transformer} is that the input content needs to add position encoding because this model is not sequential input, which implicitly includes position information.
+If there is no positional encoding added, Transformer will not be able to capture the order of input sequence, which degenerates it into a bag-of-words model in natural language processing tasks.
 
-The transformer model gradually replaced the recurrent neural network (RRN) with sequential computing restriction and long-term memory loss issues.
+While convolutional neural network (CNN) is in the ascendant among the fields of computer vision, the Transformer model composed of pure attention mechanism has achieved state-of-the-art results in many natural language processing tasks.
 
-Innovative design concepts from the transformer model are also carried forward in the fields of computer vision.
+In 2018, \citet{devlin2019bert} published the Bidirectional Encoder Representations from Transformers (BERT) model, in which the Mask Language Model (MLM) and Next Sentence Prediction (NSP), two methods are used in the pre-training process to make Transformers capture the relationship between words and sentences.
+The amazing results in many NLP tasks from this model became the most important contribution that started a new era of NLP in 2018.
 
-Many recent studies, such as Data-efficient image Transformers (DeiT) and Shifted window (Swin) transformers, have improved widely-adopted CNN-only models such as VGG and ResNet by introducing the self-attention structures to achieve better performance.
+As a result, the Transformer model gradually replaced the RNN-based seq2seq model that inherently has sequential computing and long-term memory loss issues. Innovative design concepts from the Transformer model are also carried forward from the fields of natural language processing to computer vision territory.
 
-\citet{dai2021coatnet}
+\begin{wrapfigure}{l}{0.5\textwidth}
+    \vspace*{-1em}
+    \includegraphics[width=.5\textwidth]{literature/imgs/ext-res50-deit-s.pdf}
+    \caption{Compare the architecture of ResNet-50 and DeiT-S (ViT-S)\cite{guo2021cmt}}
+    \label{fig:ext-res50-deit-s}
+\end{wrapfigure}
 
-\citet{guo2021cmt}
+Recent studies are exploring the application of Transformers architecture in the field of computer vision recently, such as Data-efficient image Transformers (DeiT) and Shifted window (Swin) Transformers.
+Many researchers have tried to introduce the attention mechanism in imagery tasks and compared model designs and results with widely-adopted CNN-only models such as ResNet, illustrated in Figure \ref{fig:ext-res50-deit-s}.
+
+However, \citet{dai2021coatnet} pointed out that the performance of Transformers-based vision models still has a gap compared with state-of-the-art convolutional networks.
+They also showed that the generalisation is worse than convolutional networks because of the lack of the right inductive bias in the Transformers-based vision models.
+As a result, they proposed a hybrid model that married convolution and attention, leading the future research direction from this attempt.
