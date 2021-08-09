@@ -12,6 +12,7 @@ Another model compression technique is quantisation that directly lower the prec
 The process can be carried out in the model deployment and conversion even after the training is completed.
 These two compression technologies may bring uncertain and insignificant acceleration, so the improvement of model calculation performance mainly depends on model distillation and network design strategies.
 
-The idea of model distillation derived from transfer learning that has a two-step training process, that firstly pre-train the model on a large data set and then fine-tuning the pre-trained model on another smaller data set.
-Model distillation process has similar ideas that transfer dark knowledge from a larger teacher network to train a smaller student network.
-In this way, it convert a large network into a small network and retain the performance close to the large teacher network.
+The idea of model distillation is derived from transfer learning, which has a two-step training process, first pre-training the model on a large dataset and then fine-tuning the pre-training model on another smaller data set.
+The model distillation process has similar ideas that transfer dark knowledge from the teacher network to train a smaller student network.
+Then, the large teacher network is converted into a small network while retaining the performance close to the teacher network.
+Although model distillation is a very effective optimisation and has quite a lot of successful researches in the NLP field, the implementation is more complicated, because transferred knowledge needs to be carefully defined according to different models.
