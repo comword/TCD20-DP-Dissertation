@@ -1,21 +1,25 @@
 % review 0.5 page
 \subsection{Human action recognition overview}
-Video understanding, like natural language processing, is a class of many subtasks.
-Table
+Video understanding, like natural language processing, is a class of many subtasks and has many similar types of tasks as shown in Table \ref{tab:Comparing tasks in natural}.
+Compared with text classification tasks in natural language processing, one type of classification task in video understanding is human action recognition based on sequential pose features in a video.
 
 \begin{table}[ht!]
-\begin{tabularx}{\textwidth}{|l|l|X|}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabularx}{\textwidth}{|l|X|X|X|}
 \hline
-NLP tasks & Video understanding tasks & Similarity \\ \hline
-                            &                     &            \\ \hline
-                            &                     &            \\ \hline
+\textbf{Task type} & \textbf{NLP task} & \textbf{Video understanding task} \\ \hline
+Sequence labelling & Part-of-speech (PoS) tagging, Named Entity Recognition (NER) & Action labelling with start and end frame position \\ \hline
+Classification & Based on sentiment, language or topic & Based on action, environment or topic \\ \hline
+Generative tasks & Translation, summarisation, Question-Answering & Video caption, video summarisation, Question-Answering based on video context \\ \hline
 \end{tabularx}
-\caption{Comparing tasks in natural language processing and video understanding}
+\caption{Comparing tasks in NLP and video understanding}
 \label{tab:Comparing tasks in natural}
 \end{table}
 
-Compared with text classification tasks in natural language processing, one type of video understanding is video action classification.
+Both video-based data set and text-based data set have characteristics of sequence, which brings the similarity of these tasks described in Table \ref{tab:Comparing tasks in natural}. 
+However, video data sets are also different from the text and have their complexity.
+\citet{wu2017recent} reviewed the wide range of applications and challenges involved in human action recognition in videos, as well as the deep learning-based techniques proposed to address the challenges.
+One challenge is that videos are divided into different classes, for example, single or multiple viewpoints and the modalities include monochrome (infrared) sequence, RGB sequence, depth image sequence, and skeleton point sequence. As for deep models, 3D-CNN, combinations of CNN and RNN was widely used before the Transformer architecture emerged.
 
-\citet{wu2017recent}
-
-\citet{chen2020monocular}
+Considering that most mobile phones capture monocular RGB sequences, therefore, my research only investigate this video modality.
+Besides, the subsection \ref{subsec: 3D-CNN and RNN based methods} will detail the 3D-CNN and models combined from CNN and RNN.
