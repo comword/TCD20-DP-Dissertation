@@ -12,7 +12,7 @@ It not only needs to detect the position of all people in the video but also cla
 \end{figure}
 
 If the target task is not to mix recognising and localising like the famous object detection model YOLO, the region proposal network (RPN) network used to obtain the position can be removed.
-In this way, the architecture paradigmata of using spatial convolution firstly and then temporal Transformer inspire research on classification tasks in the video understanding field.
+In this way, the paradigmatic architecture of using spatial convolution firstly and then temporal Transformer inspire research on classification tasks in the video understanding field.
 
 In February 2021, \citet{neimark2021video} proposed the Video Transformer Network (VTN), which intuitively uses Transformer to model long-range context relationships in videos for classification tasks.
 The architecture of this network is clearly shown in Figure \ref{fig:ext-vtn}.
@@ -45,14 +45,17 @@ ViT-B-VTN(3 layers) & 130 & 25 & 52 & 114 & 4,218 & 78.6
 \label{tab:Video Transformer Network}
 \end{table}
 
-Almost at the same time in March 2021, Google researchers \citet{arnab2021vivit} published a Video Vision Transformer (ViViT) that is a pure-transformer based model for video classification tasks.
+Almost at the same time in March 2021, Google researchers \citet{arnab2021vivit} published Video Vision Transformer (ViViT) that is a pure-transformer based model for video classification tasks.
+The first 
+Figure \ref{fig:ext-vivit} shows the architecture of the proposed model without factorisation with three model variants that factorise the different components of the transformer encoder in spatial and temporal dimensions to enhance efficiency.
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{literature/imgs/ext-vivit.pdf}
+    \caption{Video Vision Transformer model and factorised variants \cite{arnab2021vivit}}
+    \label{fig:ext-vivit}
+\end{figure}
 
 These researches on Transformer-based networks on video classification are important references to my research.
 From here on, reviewing a variety of related studies has taught me a lot and give me a clear direction for designing optimised model for the application of exam invigilation.
-I need to complete the following tasks for model design in the next design stage:
-
-\begin{itemize}
-    \item To design the model with appropriate spatial backbone and temporal Transformer backbone.
-    \item To optimise the model so that it can run on devices with limited computing power.
-\end{itemize}
+I need to complete the following tasks for model design in the next design stage: To design the model with appropriate spatial backbone and temporal Transformer backbone; and to optimise the model so that it can run on mobile devices with limited computing power.

@@ -1,13 +1,61 @@
 \section{Data set collection}
 \label{sec:Data set collection}
-In section \ref{sec:Data features and classic methods}, I have reviewed feature engineering and classic machine learning models before deep learning was widely used.
-They are extremely helpful for designing data sets collection guidelines for human action recognition tasks and designing a deep model.
+To build a video data set suitable for this research, in section \ref{sec:Data features and classic methods}, I reviewed the feature engineering and classic machine learning models before the deep-learning.
+The feature engineering process is directly related to the understanding of the characteristics of the data set.
+It helps to design the data set collection scheme and the depth model architecture.
+
+The main difficulty in human action recognition tasks lies in the acquisition of video data sets.
+In detail, it is difficult to obtain enough data in both number and quality to training deep-learning models, especially for a video data set.
+Although many public data sets for video understanding exist, unfortunately, they cannot be used in this research.
+For example, the Kinetics data set contains many labelled human actions, but none of these actions is a student taking the exam.
+Therefore, this research cannot use the public data set, which leads to the first step in my research: to collect a labelled video data set containing different actions of students taking the exam.
+
+The design of the data collection process has two aspects: one is to clarify the requirements for the video data set, and the other is to design the data collection process and the functionalities needed in the collection app according to the requirements.
 
 \subsection{Requirements of data set}
-The main difficulty of human action recognition tasks is exactly the same difficulty in the superset of them -- video understanding.
+The purpose of constructing a data set is to train a deep model to solve my research problem.
+In the research problem, the on-device camera video input stream is used as the input, so the format and modality requirements for the video data set are monocular RGB video.
+Besides, considering that the actual use case is videoing from different angles, so the data set should contain multiple angles.
+In this research, to simplify the data collection process, multiple angles are the front and side.
 
-It is difficult to obtain enough data in both number and quality to train deep-learning models, especially for a video data set.
+Another aspect is the appropriate video length in the data set.
+Too long videos may contain multiple actions that should be classified into different categories, while a too short video may result in too few data features to classify.
+Based on the experience in public video data sets, this study designs the length of every video clip in the data set to be 10 seconds.
 
-There are many public data sets for video understanding, but unfortunately, none of them has the video types needed within the research objectives.
+From my experience of doing classification tasks in machine learning, the amount of data in each category should be roughly balanced.
+An unknown category whose data volume does not exceed the others can be added to the multi-classification task to represent an activity beyond examination.
 
-\subsection{Functionality of data collection web-app}
+Based on the above discussion, the video data collection requirements are finally summarised as the followings:
+
+\begin{itemize}
+    \item The data set contains monocular RGB videos taken from the front and side of the target examinee.
+    \item The length of each video clip in the data set should be equal to 10 seconds.
+    \item Each video should be labelled with a target category when captured.
+    \item An `unknown' category should be added. The total amount of the unknown labelled data should be less than or equal to the total number of the other.
+    \item The effective categories should cover all the activities that examinees may perform during the examination.
+    \item The total amount of videos in each effective category (excluding Unknown) should be roughly balanced.
+\end{itemize}
+
+\subsection{Functionality of data collection app}
+After the data set requirements are determined, the functional requirements of the data collection APP are also clarified.
+The design before development and implementation adopts the user story method commonly used in the agile software development process.
+User stories are informal descriptions of features from the user's perspective, which intuitively explains how various users interact with the system, so as to define the system functions.
+Table \ref{tab:User stories} shows the user stories of the data collection app.
+
+\begin{table}[!ht]
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|X|X|}
+\hline
+User role   & Capability & Reason \\ \hline
+Researcher  &            &        \\ \hline
+Researcher  &            &        \\ \hline
+Researcher  &            &        \\ \hline
+Participant &            &        \\ \hline
+Participant &            &        \\ \hline
+Participant &            &        \\ \hline
+Participant &            &        \\ \hline
+Participant &            &        \\ \hline
+\end{tabularx}
+\caption{User stories for the video data collection app}
+\label{tab:User stories}
+\end{table}
