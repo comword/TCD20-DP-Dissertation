@@ -39,22 +39,28 @@ Based on the above discussion, the video data collection requirements are finall
 \subsection{Functionality of data collection app}
 After the data set requirements are determined, the functional requirements of the data collection APP are also clarified.
 The design before development and implementation adopts the user story method commonly used in the agile software development process.
+
 User stories are informal descriptions of features from the user's perspective, which intuitively explains how various users interact with the system, so as to define the system functions.
-Table \ref{tab:User stories} shows the user stories of the data collection app.
+Usually, user stories are formed in natural language description, for example:
+\begin{quote}
+    As a \textit{[role]}, I can \textit{[capability]}, because \textit{[reason]}.
+\end{quote}
+Table \ref{tab:User stories} lists the key contents of user stories in the data collection app.
 
 \begin{table}[!ht]
 \renewcommand{\arraystretch}{1.2}
 \begin{tabularx}{\textwidth}{|c|X|X|}
 \hline
 User role   & Capability & Reason \\ \hline
-Researcher  &            &        \\ \hline
-Researcher  &            &        \\ \hline
-Researcher  &            &        \\ \hline
-Participant &            &        \\ \hline
-Participant &            &        \\ \hline
-Participant &            &        \\ \hline
-Participant &            &        \\ \hline
-Participant &            &        \\ \hline
+Researcher  & Publish new tasks, delete unnecessary tasks and change description of tasks & The task list needs to be updated in real time according to required activity categories \\ \hline
+Researcher  & Query videos contributed and uploaded by participant & Obtain videos to train the model \\ \hline
+Researcher  & Delete opt-out user's information and uploaded videos as required & According to research ethics requirements \\ \hline
+Participant & Read the informed consent form and register an account if agree & According to research ethics requirements \\ \hline
+Participant & Login and authenticate to the app, reset forgotten password through email & Basic requirements for any access-controlled system \\ \hline
+Participant & Select the currently available tasks published by the researcher and start the recording process & The videos uploaded by the user should be automatically labelled by the system \\ \hline
+Participant & Record the videos through the on-device camera & Main function of the system \\ \hline
+Participant & Review and record recorded videos to server & Main function of the system \\ \hline
+Participant & Decide to opt-out the study and remove all contributions & According to research ethics requirements \\ \hline
 \end{tabularx}
 \caption{User stories for the video data collection app}
 \label{tab:User stories}
