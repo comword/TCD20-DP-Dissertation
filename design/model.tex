@@ -1,11 +1,71 @@
 \section{Deep model design}
 \label{sec:Deep model design}
-In applying deep learning methods, manual feature engineering is no longer required, but this project still needs to design a suitable deep network and construct a labelled video data set.
+Since deep networks have the duties of feature extraction, deep learning methods no longer require manual feature engineering.
+But it is still necessary to consider that different deep networks have inductive biases (preferences) for different feature types.
+The literature review section \ref{sec:Deep models detail} has reviewed models detail and instinct properties.
+For example, CNN has properties of translation invariance and is suitable for imagery features; Transformers has properties of long-range dependency modelling and adapts to time-series features.
 
-\subsection{Input data format}
+The model design procedure includes not only the network architecture but also the data loader.
+The latter is responsible for reading the result from the previous data pre-processing procedure and transforming them into the tensor shapes required by the model input layer.
+Because the data loader is the foremost part of the model design, this section will begin with the detail of loading data.
+Then, the deep network architecture for the research goal will be detailed, as well as the output layer for generating probability results.
+
+\subsection{Data loader and input layer}
+The data loader is a binding bridge between the processed data set and the model input layer, which converts the data format from the former into information that the model's input layer can accept.
+As discussed in pre-processing section \ref{sec:Data preprocessing}, the results from the previous procedure are individual video frames saved in picture format.
+Thus, any picture library in Python can read the inputs into memory, such as OpenCV, which was also previously used in data pre-processing.
+
+Table \ref{tab:Model input tensors} designs input tensors of the model.
+
+
+\begin{table}[!ht]
+\renewcommand{\arraystretch}{1.6}
+\begin{tabularx}{\textwidth}{|c|c|c|X|}
+\hline
+Tensor ID & Name           & Shape                    & Description                                            \\ \hline
+0         & Images   & {[}1, 3, 16, 224, 224{]} & {[}Batch size, RGB channels, Frames, Height, Weight{]} \\ \hline
+1         & Positions & {[}1, 16{]}              & {[}Batch size, Frame position{]}                       \\ \hline
+\end{tabularx}
+\caption{Model input tensors}
+\label{tab:Model input tensors}
+\end{table}
 
 \subsection{EfficientNet spatial backbone}
+Minimal EfficientNet backbone pretrained on ImageNet data set to do spatial feature extraction from frames.
+subsection \ref{subsec:Evolution from MobileNet to EfficientNet}
 
 \subsection{Longformer temporal backbone}
+Longformer with global and local sliding window attention pattern as a temporal encoder.
+subsection \ref{subsec:Optimisation of Transformer Networks}
 
-\subsection{Output layers and data format}
+\subsection{Output layer and data format}
+the MLP classification header with 2 fully connected dense layers
+
+\begin{table}[!ht]
+\renewcommand{\arraystretch}{1.4}
+\definecolor{caribbeangreen}{rgb}{0.0, 0.8, 0.6}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{carminered}{rgb}{1.0, 0.0, 0.22}
+\newcommand{\green}{\color{caribbeangreen} Green}
+\newcommand{\amber}{\color{amber} Amber}
+\newcommand{\red}{\color{carminered} Alert}
+\begin{tabularx}{\textwidth}{|c|c|c|X|}
+\hline
+ID & Activity    & Alert level & Description                      \\ \hline
+0           & Unknown     & \amber & The model cannot predict the current activity that may be a non-exam activity \\ \hline
+1           & Look screen & \green & The student is looking at the screen \\ \hline
+2           & Look down   & \red   & The student is looking under the table, which maybe using the phone \\ \hline
+3           & Look side   & \amber & The student is looking outside the computer screen, maybe reading a book on the table \\ \hline
+4           & Look back   & \amber & The student turned and is looking behind, maybe hiding something \\ \hline
+5           & Leave       & \amber & The student is out of the camera range \\ \hline
+6           & Speaking    & \red   & The student has obvious lip movement and is talking to others \\ \hline
+7           & Look up     & \green & The student looks up at the ceiling, may be relaxing or thinking a difficult question \\ \hline
+8           & Use phone   & \red   & The student are obviously using a mobile phone \\ \hline
+9           & Scratching  & \green & The student is scratching the head or face and may be thinking a difficult question \\ \hline
+10          & Drinking    & \green & The student is drinking water \\ \hline
+11          & Typing      & \green & The student is typing on the keyboard and answering exam questions \\ \hline
+12 -- 15    & Unused      & --     & Allow for adding more activities \\ \hline
+\end{tabularx}
+\caption{Model output for exam activity categories}
+\label{tab:Model output}
+\end{table}

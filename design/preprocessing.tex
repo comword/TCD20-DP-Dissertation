@@ -10,7 +10,7 @@ In this way, the data loader only needs to load the processed pictures during th
 
 According to research ethics requirements, the data preprocessing process will use an anonymisation algorithm to minimise the presence of facial details that might enable the identification of an individual.
 The anonymisation algorithm cannot directly mask the face completely.
-Because the facial information contains many features that help the model to classify activities, such as the direction of sight, the lips movement during speaking, etc.
+Because the facial information contains many features that help the model to classify activities, such as the direction of sight, the lip movement during speaking, etc.
 
 The anonymisation algorithm should strike a balance between the complexity of implementation, performance, and the ability to keep research related facial features.
 In the research, a simple two-step algorithm, namely feature masked face concealment, is used to extract the key facial features while covering the other facial areas.
@@ -18,8 +18,8 @@ In the research, a simple two-step algorithm, namely feature masked face conceal
 The following two subsections will introduce the details of the two-step process in the anonymisation algorithm.
 The first step is to find and locate faces in the video, and the second step is to extract facial feature points and perform masking on each frame.
 
-\subsection{Face detection with Viola–Jones algorithm} % 1 page
-\citet{viola2001rapid} proposed a fast object detection approach using Haar-like features, namely Viola–Jones algorithm, which extracts features from input images using a series of adjacent rectangular regions.
+\subsection{Face detection with Viola--Jones algorithm} % 1 page
+\citet{viola2001rapid} proposed a fast object detection approach using Haar-like features, namely Viola--Jones algorithm, which extracts features from input images using a series of adjacent rectangular regions.
 This operation is very similar to the convolution operation in convolutional neural networks.
 However, the difference is that the proposed Haar Cascade uses predefined feature extraction kernels, such as edge features, line features, etc.
 The classifier part uses AdaBoost algorithm, a famous Boosting method in ensemble learning, in which it trains many weak classifiers to form a more accurate strong classifier.
@@ -61,7 +61,8 @@ As mentioned above, after obtaining the position of faces from the input video, 
 
 A highly efficient and accurate face alignment algorithm was proposed by \citet{ren2014face} in 2014.
 This research still uses classic machine learning methods for low computation complexity by using a combination of random forest and global linear regression to regress key points of facial features.
-It learns the local binary features of each key point through random forest, then combines the features and uses linear regression to obtain the key points.
+It learns the local binary features (LBF) of each key point through random forest, then combines the features and uses linear regression to obtain the key points.
+A facial landmark detection survey study published by \citet{wu2019facial} concluded that this regression-based method has both good performance and fast speed.
 
 \begin{figure}[!ht]
     \centering
@@ -71,10 +72,11 @@ It learns the local binary features of each key point through random forest, the
 \end{figure}
 
 The left picture in Figure \ref{fig:3-face-landmark} illustrates an exemplar face image (anonymised result) with landmark masked face concealment applied.
+The right side in the figure displays the schematic of the face landmarks used in this research.
+The schematic has 68 key points to locate face landmarks in the image.
+These key points can represent many facial features, such as face orientation, lips movement and other details without exposing unrelated details in classifying exam activity.
 
-
-Local Binary Features (LBF)
-
-\citet{casado2021real}
-
-In OpenCV, cv::FacemarkLBF
+In OpenCV, this algorithm is also implemented in extra contrib modules.
+The class of detecting face landmarks with LBF algorithm is defined in cv::face::FacemarkLBF\footnote{facemarkLBF.cpp: \url{https://github.com/opencv/opencv_contrib/blob/4.5.3/modules/face/src}}, and the corresponding trained model\footnote{LBF model: \url{https://github.com/kurnianggoro/GSOC2017/raw/master/data/lbfmodel.yaml}} is provided by the algorithm contributors.
+In addition, the algorithm implementation inherits the simple and easy-to-use API of the object detection framework in OpenCV.
+Generally, using FacemarkLBF::loadModel method to load trained model and FacemarkLBF::setFaceDetector to set a custom face detector function where Haar Cascade will firstly detect face regions in the input image.
