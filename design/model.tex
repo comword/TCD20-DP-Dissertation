@@ -15,8 +15,9 @@ The data loader is a binding bridge between the processed data set and the model
 As discussed in pre-processing section \ref{sec:Data preprocessing}, the results from the previous procedure are individual video frames saved in picture format.
 Thus, any picture library in Python can read the inputs into memory, such as OpenCV, which was also previously used in data pre-processing.
 
-Table \ref{tab:Model input tensors} designs input tensors of the model.
-
+Table \ref{tab:Model input tensors} shows the design of tensors of the model's input layer.
+The model needs to input these two tensors in each step in training or inference.
+The first tensor in the table represents the image sequence, and the second tensor describes the frame position in the image sequence corresponding to the original video clip.
 
 \begin{table}[!ht]
 \renewcommand{\arraystretch}{1.6}
@@ -30,19 +31,50 @@ Tensor ID & Name           & Shape                    & Description             
 \label{tab:Model input tensors}
 \end{table}
 
-\subsection{EfficientNet spatial backbone}
-Minimal EfficientNet backbone pretrained on ImageNet data set to do spatial feature extraction from frames.
-subsection \ref{subsec:Evolution from MobileNet to EfficientNet}
+In detail, the first tensor represents the image sequence, which is a five-dimensional array defined in tensor shape.
+The first number of this tensor shape is batch size, which represents the number of samples utilised in one iteration.
+Usually, in the model training process, the batch size should be increased as much as possible under the resource allowance of the hardware so that more samples can be taken into account when calculating the back-prorogation gradient and avoid over-fitting.
+In the inference process after model training and deployment, the batch size is always one.
+The second part of the tensor shape is channels, which represents the three channels of red, green and blue in the case of an RGB image.
+The third number in the tensor shape is the number of frames uniformly sampled from the video.
+The last two numbers in tensor shape are the height and width of the image.
 
-\subsection{Longformer temporal backbone}
-Longformer with global and local sliding window attention pattern as a temporal encoder.
-subsection \ref{subsec:Optimisation of Transformer Networks}
+The second tensor represents the frame position number in the video clip.
+This position number will be used as position embedding in the temporal backbone network to capture the temporal features.
+A larger number of frames in one iteration can give more data to the model, improve the accuracy and the ability to predict long-term activities, but it also requires longer capture time and computing resources.
+To strike a balance between the model performance and resources required, I define the number of frames and frame positions in each iteration to be 16 in this study.
+
+\subsection{The spatial and temporal backbone in the model}
+\begin{wrapfigure}[19]{r}{.37\textwidth}
+    \vspace*{-1.5em}
+    \centering
+    \includegraphics[width=.33\textwidth]{design/imgs/3-model-dataflow.pdf}
+    \caption{The model data flow}
+    \label{fig:3-model-dataflow}
+\end{wrapfigure}
+
+After the data loader converts the input data into a suitable format for the input layer, the next step is to select a spatial backbone and a temporal backbone, then design a data flow to connect them in the model architecture.
+The block flowchart in Figure \ref{fig:3-model-dataflow} shows the data flow from the input layer through spatial and temporal deep networks to the final category possibility output.
+
+As for the spatial backbone, this research uses a minimal EfficientNet-B0 backbone pre-trained on the ImageNet data set to do spatial feature extraction from frames.
+The detail and evolution history of EfficientNet is reviewed in subsection  \ref{subsec:Evolution from MobileNet to EfficientNet}.
+To summary, it is a further optimisation from MobileNet, also a CNN deep network designed for mobile devices.
+
+As for the temporal backbone, Longformer is used in this research as a temporal encoder with global attention in \textit{[CLS] token} and local sliding window attention pattern.
+In subsection \ref{subsec:Optimisation of Transformer Networks}, many previous studies have pointed out the high computational complexity of the self-attention mechanism in Transformer, and proposed corresponding improvements to facilitate running on mobile devices.
 
 \subsection{Output layer and data format}
-the MLP classification header with 2 fully connected dense layers
+The output layer receives hidden states of the \textit{[CLS] token} from the Transformer-based temporal encoder and outputs the normalised category probability.
+This research uses two fully connected dense layers as the multiple layer perceptron classification header reviewed in Figure \ref{fig:ext-vtn}, Video Transformer Network architecture.
+
+The output dimension of the first dense layer is equal to the output shape of the temporal encoder, and a Gaussian Error Linear Unit (GELU) is used for nonlinear activation mapping.
+The final output layer dimension of the model is the number of classification categories.
+
+In this study, considering the difficulty of data set collection, 12 activities were designed in Table \ref{tab:Model output}, covering the common types of remote exams.
+This table also contains related descriptions and predefined risk levels for each activity, expressed in three alert levels.
 
 \begin{table}[!ht]
-\renewcommand{\arraystretch}{1.4}
+\renewcommand{\arraystretch}{1}
 \definecolor{caribbeangreen}{rgb}{0.0, 0.8, 0.6}
 \definecolor{amber}{rgb}{1.0, 0.75, 0.0}
 \definecolor{carminered}{rgb}{1.0, 0.0, 0.22}
@@ -51,7 +83,7 @@ the MLP classification header with 2 fully connected dense layers
 \newcommand{\red}{\color{carminered} Alert}
 \begin{tabularx}{\textwidth}{|c|c|c|X|}
 \hline
-ID & Activity    & Alert level & Description                      \\ \hline
+ID & Activity    & Alert level & Description \\ \hline
 0           & Unknown     & \amber & The model cannot predict the current activity that may be a non-exam activity \\ \hline
 1           & Look screen & \green & The student is looking at the screen \\ \hline
 2           & Look down   & \red   & The student is looking under the table, which maybe using the phone \\ \hline
