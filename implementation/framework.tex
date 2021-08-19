@@ -1,10 +1,11 @@
 \section{Framework selection}
 \label{sec:Framework selection}
+% 3.5 pages
 Because the scope of this research is relatively wide, covering data collection, model implementation, and mobile app implementation, many frameworks and libraries are used in implementing the system.
 Obviously, depending on target platforms, the programming language used in each part is also different.
 The next subsections will introduce both programming languages and frameworks used to develop the corresponding subsystem.
 
-\subsection{Web development} %1 page
+\subsection{Web development}
 Web technology is developing and advancing rapidly, which is the reason for the extensive use of web technology in this study.
 From the earliest era of directly programming HTML, CSS, and JavaScript, the web technology developed through templated server-side-rendering, such as PHP Hypertext Preprocessor or Jakarta Server Pages (JSP).
 Recently, web development has become more structured and engineered by using client-side rendering framework for front-end, such as React, Vue or Angular and microservice framework for back-end.
@@ -27,7 +28,7 @@ As for Redux, it is a predictable state container for JavaScript applications al
 It helps create applications that behave consistently and predictably with complicated states, and keeps the states and connects each state with views in React.
 Any action that causes change to the state is reversible with a time-travelling debugger, which provides a great developing experience.
 
-\subsection{Deep learning model development} %.5 page
+\subsection{Deep learning model development}
 In the field of deep learning, TensorFlow and PyTorch are two famous and widely used frameworks.
 They both support the use of GPU for acceleration in the model training process, but there are still many differences in programming paradigm and application areas.
 
@@ -35,23 +36,36 @@ They both support the use of GPU for acceleration in the model training process,
 PyTorch is an open source Python library widely used in the academic.
 It was published in early-2017 by the Facebook's AI Research Lab.
 In 2019, \citet{steiner2019pytorch} pointed out that Caffe, TensorFlow (version 1.x at that time), and Theano all construct a static computation dataflow graph to achieve high performance at the cost of usability, debugging, and flexibility, but PyTorch is a framework with dynamic eager execution, which enables high usability without sacrificing performance.
-Another study by \citet{florencio2019performance} in the same year conducted a detailed comparative study on the performance of Tensorflow and PyTorch.
+Another study by \citet{florencio2019performance} in the same year conducted a detailed comparative study on the performance of TensorFlow and PyTorch.
 After data analysis, they concluded that TensorFlow has higher GPU utilisation, but the PyTorch shows better overall performance.
 
-%Tensorflow
-As for Tensorflow, \citet{abadi2015tensorflow} proposed that it is a deep learning framework developed by the Google Brain team in 2015.
+As for TensorFlow, \citet{abadi2015tensorflow} proposed that it is a deep learning framework developed by the Google Brain team in 2015.
 It has a relatively long history in the deep learning field and is widely adopted in enterprises and industries.
 In TensorFlow 1.x version, the computation dataflow graph is statically defined through \textit{tf.session} and \textit{tf.placeholder} before running the model.
 This old way sacrifices usability for performance and makes it impossible to set breakpoints to view data during the computation process, which causes great inconvenience to the debugging progress.
 
-However, \citet{singh2020introduction}
+However, after the release of TensorFlow version 2.0, the previous deficiencies have been well addressed.
+\citet{singh2020introduction} compared the major changes of TensorFlow from 1.x to 2.0 in three aspects, including usability, performance, and deployment.
+In terms of usability, the framework provides easier APIs, which are divided into Keras-based high-level APIs and low-level APIs.
+Through the high-level API, a deep layer can be directly created with one line of code in high-level APIs, such as \textit{tf.keras.layers.Dense} to create a fully connected layer.
+Low-level APIs allow direct data manipulation, such as \textit{tf.matmul} for matrix multiplication and \textit{tf.transpose} for matrix transpose.
 
-\citet{luo2020comparison}
+In terms of performance on mobile devices, \citet{luo2020comparison} highlighted that only TensorFlow Lite supports NNAPI delegate, an Android Neural Networks API available after Android 8.1, ``aiming to accelerate for AI models on Android devices with supported hardware accelerators'', said by \citet{luo2020comparison}.
+The experiment result also shows that TensorFlow Lite with NNAPI delegate achieves the fastest inference speed in the performance comparison across multiple models.
 
-\subsection{Android application development} %1 page
-% TFLite
-\citet{singh2020mobile}
+In order to maximise the performance and computational efficiency, this study implements the deep learning model using the TensorFlow framework because the target deployment platform is the Android mobile devices, and TensorFlow Lite has the best compatibility and support for Android.
 
-\citet{fadlilah2021development}
+\subsection{Android application development}
+As an early and widely used deep learning framework, TensorFlow has a mature deployment process and application example on mobile devices.
+For example, \citet{fadlilah2021development} developed an Android app for sign language by using TensorFlow Lite to run a convolutional neural network.
+This framework not only has a large number of successful application precedents but also has detailed documents, books, and tutorials.
+\citet{singh2020mobile} wrote a book that shows multiple examples of TensorFlow Lite deployment and mobile application development with Flutter framework, a UI toolkit in Dart programming language released by Google.
 
-React Native \citet{eisenman2015learning}
+The Flutter framework is more efficient and developed by Google, in which all Dart code can compile by ahead-of-time (AOT) into native code during deployment.
+However, the usage of Dart programming language is rare, which means a high learning cost for developers and the available libraries are far less than mainstream programming languages.
+
+A more famous framework is React Native maintained by Facebook, which fully uses the existing web technology to develop iOS and Android mobile applications.
+By adopting this framework, front-end developers familiar with React framework can develop mobile applications without difficulties and learning costs.
+Since its release in 2015, \citet{eisenman2015learning} pointed out that it has attracted a large number of front-end developers and can use a majority of existing JavaScript libraries.
+
+As a result, this study chose to use the React Native framework to implement the mobile app with deep model deployed in TensorFlow Lite library.
