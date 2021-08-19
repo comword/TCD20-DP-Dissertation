@@ -55,7 +55,7 @@
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[colorlinks=true, allcolors=black]{hyperref}
 \usepackage{caption} % if no caption, no colon
-\usepackage[ruled,vlined]{algorithm2e}
+\usepackage[ruled,vlined,linesnumbered,resetcount,algochapter]{algorithm2e}
 \usepackage{sfmath} %use sans-serif in the maths sections too
 \usepackage[parfill]{parskip}    % Begin paragraphs with an empty line rather than an indent
 \usepackage{setspace} % to permit one-and-a-half or double spacing
@@ -149,6 +149,9 @@
 \listoffigures
 \newpage
 \listoftables
+\newpage
+\listofalgorithms
+\addcontentsline{toc}{chapter}{List of Algorithms}
 \input{title/nomenclature}
 
 \mainmatter

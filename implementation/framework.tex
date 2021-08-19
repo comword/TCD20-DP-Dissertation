@@ -1,22 +1,52 @@
 \section{Framework selection}
 \label{sec:Framework selection}
 Because the scope of this research is relatively wide, covering data collection, model implementation, and mobile app implementation, many frameworks and libraries are used in implementing the system.
+Obviously, depending on target platforms, the programming language used in each part is also different.
+The next subsections will introduce both programming languages and frameworks used to develop the corresponding subsystem.
 
 \subsection{Web development} %1 page
-\citet{nodejs2021}
+Web technology is developing and advancing rapidly, which is the reason for the extensive use of web technology in this study.
+From the earliest era of directly programming HTML, CSS, and JavaScript, the web technology developed through templated server-side-rendering, such as PHP Hypertext Preprocessor or Jakarta Server Pages (JSP).
+Recently, web development has become more structured and engineered by using client-side rendering framework for front-end, such as React, Vue or Angular and microservice framework for back-end.
+Cross-platform UI frameworks such as Electron, React-Native, and Weex make web technology the preferred solution for developing cross-platform applications on the client side.
 
-\citet{react2021}
+Web technologies have been majorly used both in the web-based data collection app and the mobile app user interface/user experience(UI/UX) design.
+TypeScript, a strongly typed programming language building upon JavaScript, is used for the web front-end development of the data collection app.
+As for the back-end development, this study uses Golang for a better gRPC experience.
 
-\citet{redux2021}
+Node.js is used as the front-end development environment in this study.
+It was initiated by \citet{nodejs2021} in mid-2009, aimed to create a high-efficient JavaScript runtime.
+Node.js is built on Google Chrome's V8 JavaScript engine, one of the most efficient JavaScript engines and is widely adopted in front-end development because of its powerful package manager and excellent ecosystem for rich frameworks and libraries.
+
+The data collection app requires a user interface, implement data flows, thus, using a mature front-end framework is the best choice.
+Although many famous frameworks to choose from, such as React, Vue and Angular, I finally decided to use React, a declarative, efficient, and flexible JavaScript library for building user interfaces.
+Because it is less complex compared to the other alternatives and it is being supported and maintained by \citet{react2021}.
+It also has a good ecosystem and many successful apps are developed based on it, which is beneficial to explore in the project.
+
+As for Redux, it is a predictable state container for JavaScript applications also a good companion with React, developed by \citet{redux2021}.
+It helps create applications that behave consistently and predictably with complicated states, and keeps the states and connects each state with views in React.
+Any action that causes change to the state is reversible with a time-travelling debugger, which provides a great developing experience.
 
 \subsection{Deep learning model development} %.5 page
-%Tensorflow
-\citet{abadi2015tensorflow}
+In the field of deep learning, TensorFlow and PyTorch are two famous and widely used frameworks.
+They both support the use of GPU for acceleration in the model training process, but there are still many differences in programming paradigm and application areas.
 
 %PyTorch
-\citet{steiner2019pytorch}
+PyTorch is an open source Python library widely used in the academic.
+It was published in early-2017 by the Facebook's AI Research Lab.
+In 2019, \citet{steiner2019pytorch} pointed out that Caffe, TensorFlow (version 1.x at that time), and Theano all construct a static computation dataflow graph to achieve high performance at the cost of usability, debugging, and flexibility, but PyTorch is a framework with dynamic eager execution, which enables high usability without sacrificing performance.
+Another study by \citet{florencio2019performance} in the same year conducted a detailed comparative study on the performance of Tensorflow and PyTorch.
+After data analysis, they concluded that TensorFlow has higher GPU utilisation, but the PyTorch shows better overall performance.
 
-\citet{florencio2019performance}
+%Tensorflow
+As for Tensorflow, \citet{abadi2015tensorflow} proposed that it is a deep learning framework developed by the Google Brain team in 2015.
+It has a relatively long history in the deep learning field and is widely adopted in enterprises and industries.
+In TensorFlow 1.x version, the computation dataflow graph is statically defined through \textit{tf.session} and \textit{tf.placeholder} before running the model.
+This old way sacrifices usability for performance and makes it impossible to set breakpoints to view data during the computation process, which causes great inconvenience to the debugging progress.
+
+However, \citet{singh2020introduction}
+
+\citet{luo2020comparison}
 
 \subsection{Android application development} %1 page
 % TFLite
