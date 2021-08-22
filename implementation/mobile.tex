@@ -55,18 +55,77 @@ A thread-safe blocking queue is a queue that may block in \textit{dequeue} opera
 If the blocking queue has already been empty, a \textit{dequeue} operation will block the calling thread until new data are available in the queue.
 Conversely, a \textit{enqueue} operation will block the calling thread if the blocking queue has already full.
 
-Algorithm \ref{algo:Image processing pipeline thread} 
-
 \begin{algorithm}[!ht]
 \caption{Image processing pipeline thread}
 \label{algo:Image processing pipeline thread}
-
+\KwData{Readable image stream $v$ of cv::VideoCapture}
+\KwResult{Processed image array $p$[] of cv::Mat}
+initialisation\tcp*{OpenCV VideoCapture, CascadeClassifier, FacemarkLBF}
+$STOP \gets false$\;
+\While{not STOP}{
+    $p_{bgr} \gets read(v)$\;
+    $p_{grey} \gets cvtColor(p_{bgr}, BGR2GRAY)$\tcp*{Grey is used for detecting face}
+    $p_{half} \gets resize(p_{grey}, 0.5f, 0.5f)$\tcp*{Scale down for better preformance}
+    $p_{half} \gets equalizeHist(p_{half})$\tcp*{Histogram equalisation for better adaptation to different environmental lighting}
+    $f$[] $\gets CascadeClassifier::detectMultiScale(p_{half}, parameters)$\;
+    $l$[][] $\gets FacemarkLBF::fit(p_{half}, f$[]$)$\;
+    \For{$i \gets 0$ \KwTo $sizeof\ f$[]}{
+    $p_{anonymous} \gets drawCover(p_{bgr}, f$[$i$]$)$\;
+    $p_{anonymous} \gets drawLandmark(p_{anonymous}, l$[$i$][]$)$\;
+    }
+    $p_{rgba} \gets cvtColor(p_{anonymous}, BGR2RGBA)$\tcp*{ANativeWindow requires image in RGBA format}
+    $enqueue(displayQueue, p_{rgba})$\tcp*{Enqueue to display thread}
+    $addImage(p_{anonymous})$\tcp*{Preform temporal sampling and add to the current writing queue in the triple buffer}
+}
 \end{algorithm}
 
-\subsection{Tensorflow Lite adoption and inference}
+Algorithm \ref{algo:Image processing pipeline thread} shows the simplified processing procedure in the image processing pipeline thread, which includes reading camera data, performing anonymisation, and sending the processed data to other threads.
+For the display thread, it only needs to dequeue the RGBA data processed and converted by Algorithm \ref{algo:Image processing pipeline thread} from the $displayQueue$, and invoke the Android API to set the OpenGL texture.
+In this way, the new frame will be displayed in real-time from the OpenGL rendering loop.
+
+\subsection{Tensorflow Lite adoption and model inference}
 Although Google provides some ready-made models and easy-to-call Java bindings, it is necessary to use C++ for custom model workflow.
 Besides, not all deep models implemented in TensorFlow can be converted to the Lite version due to limited operators compatibility.
+In the deep model conversion stage, this project firstly loads the trained model, then uses the \textit{from\_keras\_model} mode\footnote{TensorFlow Lite converter: \url{https://www.tensorflow.org/lite/convert\#convert_a_keras_model_}} of the TensorFlow Lite converter by specifying \textit{SELECT\_TF\_OPS}\footnote{Select TensorFlow operators: \url{https://www.tensorflow.org/lite/guide/ops_select}} parameter to allow the usage of certain TensorFlow operators in the TensorFlow Lite version.
 
+To reduce the app size and make the converted model generated in the previous step better adapt to mobile devices, this project strips unnecessary operators by compiling the executable binary files from TensorFlow Lite source code according to the document\footnote{Reduce TensorFlow Lite binary size: \url{https://www.tensorflow.org/lite/guide/reduce_binary_size}}.
+Besides, another important reason why this project chooses to compile libraries from source code is to use TFLite C++ API as documented in the official guide\footnote{Use TFLite C++ API: \url{https://www.tensorflow.org/lite/guide/android\#use_tflite_c_api}}.
+
+One failed attempt is trying to use the built-in optimisation of the TensorFlow Lite converter, such as pruning and quantisation introduced in mobile device optimisation section \ref{sec:Mobile device optimisation}.
+However, due to an unresolved issue\footnote{Did not get operators or tensors in subgraph: \url{https://github.com/tensorflow/tensorflow/issues/45313}} in the TensorFlow v2.5.0 library, further optimisation attempts are failed.
+After this issue of library is solved in the future, the model should be able to be further optimised.
+
+After converting the model into the TFLite version and building the runtime binary, then it is time to implement the model inference thread.
+As mentioned earlier, the key task in the model inference thread is to use the frames received from the image processing pipeline for temporal sampling to write sampled frames to the triple buffer and invoke the TensorFlow Lite library.
+The temporal sampling algorithm as shown in Algorithm \ref{algo:Temporal sampling and triple buffering} is to sample 16 images from the video stream at an equal time interval same as one iteration in the model training process (25fps).
+
+\begin{algorithm}[!ht]
+\caption{Temporal sampling and triple buffering}
+\label{algo:Temporal sampling and triple buffering}
+\KwData{Processed images from pipeline $x$[]; Current frame index$C_{frame}$}
+\KwResult{Temporal sampled images queue $s$[$16$]; Image index array $p$[$16$]}
+$T_{now} \gets getTime()$\tcp*{Assume time in second for simplex}
+$T_{diff} \gets T_{now} - T_{last}$\;
+$f \gets \floor*{\frac{T_{diff} \times TARGET_FPS}{10}}$\tcp*{Sampling frames at 0s(frame 0), 0.4s, 0.8s, 1.2s, 1.6s...6s(frame 15)}
+\If{$f \geq MAX\_POSITION\_EMBEDDINGS - 2$}{
+    \tcp{Position embedding overflown, restart frame sampling}
+    $T_{last} \gets T_{now}$\;
+    $C_{frame} \gets 0$\;
+    empty $s$ and $p$\;
+}
+\If{$f \geq sizeof\ s$}{
+    \tcp{Sampling a frame to the queue}
+    $push(s, x)$\;
+    $push(p, C_{frame})$\;
+    \If{sizeof\ s == BATCH\_FRAME\_NUM}{
+        \tcp{Finish sampling 16 frames}
+        $T_{last} \gets T_{now}$\;
+        $C_{frame} \gets 0$\;
+        $flipWriter()$\tcp*{flip the triple buffer}
+        empty $s$ and $p$\tcp*{clear old data after flipped to new buffer}
+    }
+}
+\end{algorithm}
 
 As for triple buffering, it is a bridge that connects the image processing thread and model inference thread.
 This data structure type has been widely used in the producer-consumer paradigm to deal with the inconsistency of the consumer has a slower speed than the producer.
@@ -79,9 +138,4 @@ Thanks to the atomic operation support provided by C++, \citet{andre2021triple} 
 
 One problem with the initial version of this project is that the model inference thread may read empty data from the triple buffer because the image processing pipeline takes time to produce.
 To tinkle this problem, a \textit{readLastBlock} is implemented using mutex and a conditional variable to block the model inference thread until the first set of image data is valid.
-
-\begin{algorithm}[!ht]
-\caption{Deep model inference procedure}
-\label{algo:Deep model inference procedure}
-
-\end{algorithm}
+After completing the implementation of temporal sampling and triple buffering,  this project only need to copy the reading snap into tensor and invoke the TensorFlow Lite inference API to get the result.
