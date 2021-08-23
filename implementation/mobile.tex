@@ -5,6 +5,7 @@ While waiting for the data set to be collected, I designed the deep model as det
 After the design of the model is completed, the data loader and the deep model are implemented using Python programming language and TensorFlow framework.
 The implementation of EfficientNet (\textit{tf.keras.applications.efficientnet.EfficientNetB0}) and the MLP classification head (\textit{tf.keras.layers.Dense} and \textit{tf.keras.layers.Dropout}) is composed directly from the TensorFlow Keras-style high-level APIs.
 The Longformer implementation uses the Hugging Face Transformer\footnote{Hugging Face Transformers: \url{https://huggingface.co/transformers/}} library.
+The detail of each layer in the implemented model is shown in \ref{chap:Model design details}.
 After finish implementing and training the deep model, the remaining research goal is to port the deep model to Android platform.
 
 Although the most widely used programming language for Android development is Java, this project does not use Java except for the automatically generated initialisation codes and native function bindings.

@@ -20,7 +20,7 @@ The model needs to input these two tensors in each step in training or inference
 The first tensor in the table represents the image sequence, and the second tensor describes the frame position in the image sequence corresponding to the original video clip.
 
 \begin{table}[!ht]
-\renewcommand{\arraystretch}{1.6}
+\renewcommand{\arraystretch}{1.2}
 \begin{tabularx}{\textwidth}{|c|c|c|X|}
 \hline
 Tensor ID & Name           & Shape                    & Description                                            \\ \hline
@@ -45,11 +45,11 @@ A larger number of frames in one iteration can give more data to the model, impr
 To strike a balance between the model performance and resources required, I define the number of frames and frame positions in each iteration to be 16 in this study.
 
 \subsection{The spatial and temporal backbone in the model}
-\begin{wrapfigure}[19]{r}{.37\textwidth}
-    \vspace*{-1.5em}
+\begin{wrapfigure}[19]{r}{.32\textwidth}
+    \vspace*{-1.2em}
     \centering
-    \includegraphics[width=.33\textwidth]{design/imgs/3-model-dataflow.pdf}
-    \caption{The model data flow}
+    \includegraphics[width=.32\textwidth]{design/imgs/3-model-dataflow.pdf}
+    \caption{The data flow}
     \label{fig:3-model-dataflow}
 \end{wrapfigure}
 
@@ -74,7 +74,7 @@ In this study, considering the difficulty of data set collection, 12 activities 
 This table also contains related descriptions and predefined risk levels for each activity, expressed in three alert levels.
 
 \begin{table}[!ht]
-\renewcommand{\arraystretch}{1}
+\renewcommand{\arraystretch}{1.1}
 \definecolor{caribbeangreen}{rgb}{0.0, 0.8, 0.6}
 \definecolor{amber}{rgb}{1.0, 0.75, 0.0}
 \definecolor{carminered}{rgb}{1.0, 0.0, 0.22}
@@ -101,3 +101,30 @@ ID & Activity    & Alert level & Description \\ \hline
 \caption{Model output for exam activity categories}
 \label{tab:Model output}
 \end{table}
+
+\subsection{Loss function and training hyperparameters}
+The categorical crossentropy loss is a commonly used loss function in classification tasks.
+In TensorFlow, if the labels is in one-hot representation, \textit{CategoricalCrossentropy} loss should be used.
+In the case of labels provided as integers, \textit{SparseCategoricalCrossentropy} should be used.
+Since this study uses a deep learning model to solve the multi-classification problem where the label of each data sample is a integer category index of the matching category, the appropriate loss function is \textit{tf.keras.losses.SparseCategoricalCrossentropy}.
+
+Many hyperparameters are involved in the deep model training process, where the model performance is closely related to fine-tuning.
+The process of training any deep model involves two important hyperparameters, batch size and learning rate.
+The batch size represents the number of samples input to the model in each iteration.
+The learning rate represents the update factor of the model weight moving toward a minimum of the loss function.
+A larger batch size allows the trainer to better calculate the backpropagation gradient with more samples, where appropriately increasing the learning rate can make the model converge faster.
+A too-large learning rate will cause an oscillating loss value making the model difficult to converge.
+Conversely, a too-small learning rate will slow down the training process and make the optimiser easier to get stuck at saddle points.
+
+\begin{wrapfigure}{r}{.6\textwidth}
+    \vspace*{-1.2em}
+    \centering
+    \includegraphics[width=.6\textwidth]{design/imgs/3-lr-warmup.pdf}
+    \caption{Learning rate warm-up}
+    \label{fig:3-lr-warmup}
+\end{wrapfigure}
+
+Because the Transformer has high versatility and low inductive bias than CNN, many previous studies have shown that learning rate warm-up is an effective and necessary design to prevent overfitting when training Transformer-based deep networks.
+An intuitive explanation for the learning rate warm-up is that the model knows nothing about the data attributes and distribution at the beginning of training.
+Using a large learning rate at the beginning will cause the model to overfit the first few samples immediately, making it hard to remedy it in the subsequent training steps.
+Figure \ref{fig:3-lr-warmup} illustrates the learning rate scheduler function to apply the warm-up pattern in the training process.

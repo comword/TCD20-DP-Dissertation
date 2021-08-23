@@ -3,6 +3,13 @@
 
 \begin{figure}[!ht]
     \centering
+    \includegraphics[width=\textwidth]{evaluation/imgs/5-data-dist-diag.pdf}
+    \caption{Data per category distribution}
+    \label{fig:5-data-dist-diag}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
     \includegraphics[width=\textwidth]{evaluation/imgs/5-train-step.pdf}
     \caption{Model training steps}
     \label{fig:5-train-step}
@@ -15,16 +22,42 @@
     \label{fig:5-val-steps}
 \end{figure}
 
-\begin{figure}[!ht]
+\clearpage
+\begin{figure}[H]
     \centering
-    \includegraphics[width=.85\textwidth]{evaluation/imgs/5-confusion_matrix_val.pdf}
+    \includegraphics[width=.74\textwidth]{evaluation/imgs/5-confusion_matrix_val.pdf}
     \caption{Confusion matrix on validation data set}
     \label{fig:5-confusion_matrix_val}
 \end{figure}
 
-\begin{figure}[!ht]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=.85\textwidth]{evaluation/imgs/5-confusion_matrix_train.pdf}
+    \includegraphics[width=.74\textwidth]{evaluation/imgs/5-confusion_matrix_train.pdf}
     \caption{Confusion matrix on training data set}
     \label{fig:5-confusion_matrix_train}
 \end{figure}
+
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+              & Precision & Recall & F1-Score & Support \\ \hline
+0 Unknown     & 1.00      & 0.97   & 0.98     & 301     \\ \hline
+1 Look screen & 0.99      & 1.00   & 0.99     & 189     \\ \hline
+2 Look down   & 1.00      & 1.00   & 1.00     & 89      \\ \hline
+3 Look side   & 1.00      & 1.00   & 1.00     & 64      \\ \hline
+4 Look back   & 1.00      & 1.00   & 1.00     & 31      \\ \hline
+5 Leave       & 0.87      & 0.94   & 0.90     & 35      \\ \hline
+6 Speaking    & 1.00      & 1.00   & 1.00     & 75      \\ \hline
+7 Look up     & 1.00      & 1.00   & 1.00     & 32      \\ \hline
+8 Use phone   & 0.98      & 1.00   & 0.99     & 122     \\ \hline
+9 Scratching  & 1.00      & 0.75   & 0.86     & 28      \\ \hline
+10 Drinking   & 0.83      & 1.00   & 0.91     & 39      \\ \hline
+11 Typing     & 1.00      & 1.00   & 1.00     & 22      \\ \hline
+Accuracy      & \multicolumn{3}{c|}{0.98}     & 1027    \\ \hline
+macro avg     & 0.97      & 0.97   & 0.97     & 1027    \\ \hline
+weighted avg  & 0.98      & 0.98   & 0.98     & 1027    \\ \hline
+\end{tabular}
+\caption{Test classification report on validation data set}
+\label{tab:Test classification report}
+\end{table}

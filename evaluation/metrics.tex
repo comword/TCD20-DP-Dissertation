@@ -1,2 +1,50 @@
 \section{Evaluation metrics}
 \label{sec:Evaluation metrics}
+
+In this study, the application of the deep model is to solve a multi-classification problem that classifies the video input from a mobile device into different exam activities.
+To introduce the evaluation metrics of multi-classification problems, it is necessary to start with the simplest binary classification problem.
+
+\begin{table}[!ht]
+\renewcommand{\arraystretch}{1.8}
+\centering
+\begin{tabularx}{.9\textwidth}{|c|c|X|X|}
+\hline
+& \multicolumn{3}{c|}{Prediction} \\ \hline
+\multirow{3}{*}{\rotatebox[origin=c]{90}{True}} & & \cellcolor{green!50}Positive & \cellcolor{red!50}Negative \\ \cline{2-4}
+& \cellcolor{green!50}Positive  & TP: a correct result where the model correctly predicts the positive class & FN: a wrong result where the model predicts the positive class to negative class \\ \cline{2-4} 
+& \cellcolor{red!50}Negative & FP: also a wrong result where the model predicts the negative class to positive class & TN: also a correct result where the model correctly predicts the negative class \\ \hline
+\end{tabularx}
+\caption{Confusion matrix in binary classification}
+\label{tab:Confusion matrix in binary classification}
+\end{table}
+
+Table \ref{tab:Confusion matrix in binary classification} shows the confusion matrix, a matrix commonly used to visually express the performance evaluation of a classifier.
+In the binary classification problem, there are four values in this matrix, namely True Positive(TP), False Negative(FN), False Positive(FP) and True Negative(TN), as explained in the table.
+It is worth noting that the diagonal elements starting from the upper left corner represent the samples whose predicted label is equal to the true label, while the off-diagonal elements are samples incorrectly predicted by the classifier.
+
+The binary classification problem has many evaluation metrics calculated using the four values in the confusion matrix, such as accuracy, accuracy, and recall.
+In order to adopt these metrics in multi-classification problems, a common solution is to convert it into $n$ numbers of binary classification problems, that is, for a certain category, samples that are correctly classified as that category are True Positive, and samples that are correctly classified as not that category are True Negative.
+In multi-classification problems, the definition of some metrics have expanded to allow different ways of averaging.
+Table \ref{tab:The evaluation metrics} illustrates widely used evaluation metrics summarised by \citet{foss2018multiclass} under multi-classification model evaluation scenario, where $M$ and $\mu$ denotes macro- and micro-averaging respectively.
+
+\begin{table}[!htbp]
+\renewcommand{\arraystretch}{1.8}
+\centering
+\begin{tabularx}{\textwidth}{p{.12\linewidth}|>{\centering\arraybackslash}m{.3\linewidth}X}
+\hline
+Metric & Formula & Meaning \\
+\hline
+Average accuracy & \vspace{1em}$\begin{aligned}\frac{1}{k}\sum_{i=1}^{k} \frac{TP_{i}+TN_{i}}{TP_{i}+TN_{i}+FP_{i}+TN_{i}}\end{aligned}$ & A average per-class ratio between the number of correctly classified samples and the total number of samples. \\
+Precision$_M$ & $\begin{aligned}\frac{1}{k}\sum_{i=1}^{k} \frac{TP_{i}}{TP_{i}+FP_{i}}\end{aligned}$ & For each category, calculate the precision separately, and then take the average. \\
+Recall$_M$ & $\begin{aligned}\frac{1}{k}\sum_{i=1}^{k} \frac{TP_{i}}{TP_{i}+FN_{i}}\end{aligned}$ & For each category, calculate the recall separately, and then take the average, showing the average per-class effectiveness of a classifier to identify labels. \\
+F1-score$_M$ & $\begin{aligned}\frac{2 \times \text{Precision}_{M} \times \text{Recall}_{M}}{\text {Precision}_{M}+\text{Recall}_{M}}\end{aligned}$ & The harmonic mean of the macro-average precision and recall. \\
+Precision$_\mu$ & $\begin{aligned}\frac{\sum_{i=1}^{k} TP_{i}}{\sum_{i=1}^{k}\left(TP_{i}+FP_{i}\right)}\end{aligned}$ & Add TP and FP across all categories together and calculate the precision once. \\
+Recall$_\mu$ & $\begin{aligned}\frac{\sum_{i=1}^{k} TP_{i}}{\sum_{i=1}^{k}\left(TP_{i}+FN_{i}\right)}\end{aligned}$ & Add TP and FN across all categories together and calculate the recall once. \\
+F1-score$_\mu$ & $\begin{aligned}\frac{2 \times \text{Precision}_{\mu} \times \text{Recall}_{\mu}}{\text {Precision}_{\mu}+\text{Recall}_{\mu}}\end{aligned}$ & The harmonic mean of the micro-average precision and recall. \\
+\hline
+\end{tabularx}
+\caption{The evaluation metrics, the formulae are summarised by \citet{foss2018multiclass}}
+\label{tab:The evaluation metrics}
+\end{table}
+
+This study will then evaluate performances of the deep model using confusion matrix, average accuracy, as well as precision, recall and F1-score all in macro-average.

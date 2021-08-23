@@ -63,7 +63,7 @@
 \usepackage{booktabs} % To thicken table lines
 \usepackage{titletoc}
 \usepackage{color}
-\usepackage{multicol}
+\usepackage{multirow,multicol}
 \usepackage{supertabular}
 \usepackage{tabularx}
 \usepackage{ltxtable}
@@ -149,22 +149,28 @@
 
 \tableofcontents
 \newpage
+% \makeatletter
+% \let\savedchap\@makeschapterhead
+% \def\@makeschapterhead#1#2{\vspace*{-.5cm}\savedchap{#1}{#2}\vspace*{-.5cm}}
 \listoffigures
-\newpage
+% \let\@makeschapterhead\savedchap
+% \makeatother
 \listoftables
-\newpage
+\begingroup
+\let\clearpage\relax
 \listofalgorithms
 \addcontentsline{toc}{chapter}{List of Algorithms}
+\endgroup
 \input{title/nomenclature}
 
 \mainmatter
 \onehalfspacing
 \input{introduction/introduction} % 4 pages
 \input{literature/literature} % 22 pages / 26
-\input{design/design} % 9 pages / 35
-\input{implementation/implementation} % 8 pages / 43
-\input{evaluation/evaluation} % 8 pages / 51
-\input{conclusion/conclusion} % 2 pages / 53
+\input{design/design} % 10 pages / 36
+\input{implementation/implementation} % 11 pages / 47
+\input{evaluation/evaluation} % 6 pages / 53
+\input{conclusion/conclusion} % 2 pages / 55
 \newpage
 \nocite{*}
 \emergencystretch=1em
