@@ -77,13 +77,16 @@ During the training process, the loss of the training data set is always droppin
     \caption{Confusion matrix on validation data set}
     \label{fig:5-confusion_matrix_val}
 \end{figure}
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=.75\textwidth]{evaluation/imgs/5-confusion_matrix_train.pdf}
     \caption{Confusion matrix on training data set}
     \label{fig:5-confusion_matrix_train}
 \end{figure}
+
+Figure \ref{fig:5-confusion_matrix_val} and Figure \ref{fig:5-confusion_matrix_train} shows two confusion matrices on validation and training data set, respectively.
+
+Table \ref{tab:Test classification report} shows a classification report of the validation data set on the evaluation metrics introduced in Section \ref{sec:Evaluation metrics}.
 
 \begin{table}[!htbp]
 \centering
@@ -106,6 +109,11 @@ Accuracy      & \multicolumn{3}{c|}{0.98}     & 1027    \\ \hline
 macro avg     & 0.97      & 0.97   & 0.97     & 1027    \\ \hline
 weighted avg  & 0.98      & 0.98   & 0.98     & 1027    \\ \hline
 \end{tabular}
-\caption{Test classification report on validation data set}
+\caption{Test classification report of validation data set}
 \label{tab:Test classification report}
 \end{table}
+
+The Unknown category has more false-negative results than the others, which means that some videos from the Unknown category were classified into the categories of exam activity.
+Different proportions of the Unknown category to the exam activity categories will change the willingness of predicting the Unknown category.
+In this study, the ratio of Unknown category size and the size of the total exam activity categories is $\frac{2940}{1210} = 0.42$.
+In future works, more samples can be added into the Unknown category in the training data set to reduce false negatives in this category.
