@@ -45,11 +45,11 @@ Then, experiments were performed on the machine translation task using the propo
 \begin{equation}
     Attention(Q, K, V) = softmax(\frac{QK^T}{\sqrt{d_k}})V
     \eqcite{vaswani2017attention}
-    \label{equ:2-attention}
+    \label{eq:2-attention}
 \end{equation}
 
 Figure \ref{fig:ext-attention-dot-product} shows the scaled dot-product attention mechanism, where Q, K, and V represent Query, Key and Value respectively.
-Further, formula \ref{equ:2-attention} shows the calculation process of it mathematically.
+Further, formula \ref{eq:2-attention} shows the calculation process of it mathematically.
 In this formula, the dot-product between Query and Key matrix represents their similarity, which is normalised by the square root of the dimension of $d_k$, since dot-product may grow large in magnitude, pushing the softmax activation function into regions where it has extremely small gradients.
 The result from softmax activation is normalised probabilities representing the attention matrix visualised in Figure  \ref{fig:ext-attention_map_portuguese}.
 

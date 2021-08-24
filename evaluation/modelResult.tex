@@ -17,9 +17,9 @@ As for the vertical axis, it represents the number of labelled samples.
 A labelled sample has one label and 16 frames from temporal sampling in a video clip.
 To ensure that the validation data set has enough samples to illustrate the model performance, one-third of the total data set is divided into the validation data set, and the remaining two-thirds are used for training the deep model.
 
-Over-fitting is an unavoidable problem in deep learning, especially when using a complex model on small data sets.
-It is a phenomenon that the model loses its generalisation application ability, which manifests as the model has extremely small loss and very high accuracy on the training set, however, a over-fitted model will perform badly on the validation set. 
-The main reasons for over-fitting and the corresponding solutions are as follows:
+Overfitting is an unavoidable problem in deep learning, especially when using a complex model on small data sets.
+It is a phenomenon that the model loses its generalisation application ability, which manifests as the model has extremely small loss and very high accuracy on the training set, however, a overfitted model will perform badly on the validation set. 
+The main reasons for overfitting and the corresponding solutions are as follows:
 \begin{enumerate}
     \item The size of the data set does not match the complexity of the model. \\ \textbf{Solution}: To use data augmentation or reduce the model complexity.
     \item There are errors in the data sets, e.g. data have wrong labels, unshuffled data resulting in distribution difference between the training set and the validation set. \\
@@ -28,38 +28,59 @@ The main reasons for over-fitting and the corresponding solutions are as follows
     \textbf{Solution}: To reduce the number of training epochs or use the early-stop mechanism to detect increasing loss in the validation set.
 \end{enumerate}
 
-In this study, the above three solutions were all applied in the training process to avoid over-fitting.
+In this study, the above three solutions are all applied in the training process to avoid overfitting.
 In detail, the early-stop mechanism is implemented the model trainer, which monitors the loss value on the verification set after each training epoch.
 Once the verification loss is found to increase, it will stop training.
 The data loader uses common data augmentation methods in computer vision to perform the same transformation on the same batch of input data, such as scaling, randomly cropping, and flipping horizontally and vertically.
 Besides, the data sets are carefully validated and visually checked using Jupyter notebook with \textit{matplotlib.animation} library.
 
+Figure \ref{fig:5-lr-warmup} visually illustrates the result from the warm-up learning rate scheduler function introduced in the training hyperparameters design subsection \ref{subsec:Loss function and training hyperparameters}.
+The figure covers the training iterations to 6000 as the training process is expected to be completed within 10 epochs.
+Because this study uses a relatively small self-built data set and the deep model has a reduced complexity for mobile devices.
+The figure shows that the learning rate increases linearly and reaches the peak at the 2000\textsuperscript{th} iteration, which is defined as a hyperparameter in the model trainer.
+After the learning rate reaches its peak, it gradually decreases with a negative exponent, making the training process enter the final fine-tuning stage.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=.7\textwidth]{evaluation/imgs/5-lr-warmup.pdf}
+    \caption{Learning rate warm-up}
+    \label{fig:5-lr-warmup}
+\end{figure}
+
+Figure \ref{fig:5-train-step} and Figure \ref{fig:5-val-steps} display the model training and validating iterations.
+At the beginning of the first epoch training, although the learning rate is low, the loss decreases steadily during this training epoch, indicating that the learning rate warm-up is effective to alleviate the overfitting.
+If there was no learning rate warm-up mechanism, the training loss would drop dramatically at the beginning, and the loss might increase in the subsequent training process, indicating that the model was overfitted.
+At the end of the first training epoch, the learning rate is about 0.00084, the loss drops to 1.92, and the accuracy on the training set achieves 0.4.
+As for the validation after the first training epoch, both the loss and the accuracy is about 0.8 because no data augmentation applied to the validation data set, making this data set is easier to classify.
+
+Starting from the second epoch, the training loss instantly drops to about 1, and the accuracy increases to 0.6 because all the training data has been completely input into the model once, thus, the model has already considerably understood the data form and distribution.
+During the training process, the loss of the training data set is always dropping, but the loss in the validation data set starts to rise from epoch 4, which means that over-train the model leads to overfitting.
+\vspace*{-.5em}
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=.85\textwidth]{evaluation/imgs/5-train-step.pdf}
+    \includegraphics[width=.84\textwidth]{evaluation/imgs/5-train-step.pdf}
     \caption{Model training steps}
     \label{fig:5-train-step}
 \end{figure}
+\vspace*{-.5em}
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=.85\textwidth]{evaluation/imgs/5-val-steps.pdf}
+    \includegraphics[width=.84\textwidth]{evaluation/imgs/5-val-steps.pdf}
     \caption{Model validation steps}
     \label{fig:5-val-steps}
 \end{figure}
 
-Figure \ref{fig:5-train-step} and Figure \ref{fig:5-val-steps} display the model training and validating iterations.
-
 \clearpage
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.74\textwidth]{evaluation/imgs/5-confusion_matrix_val.pdf}
+    \includegraphics[width=.75\textwidth]{evaluation/imgs/5-confusion_matrix_val.pdf}
     \caption{Confusion matrix on validation data set}
     \label{fig:5-confusion_matrix_val}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.74\textwidth]{evaluation/imgs/5-confusion_matrix_train.pdf}
+    \includegraphics[width=.75\textwidth]{evaluation/imgs/5-confusion_matrix_train.pdf}
     \caption{Confusion matrix on training data set}
     \label{fig:5-confusion_matrix_train}
 \end{figure}

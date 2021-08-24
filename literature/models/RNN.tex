@@ -25,10 +25,10 @@ However, \citet{hochreiter1997long} pointed out that simple RNN tends to only ke
 \begin{equation}
     \frac{\partial \vartheta_{v}(t-q)}{\partial \vartheta_{u}(t)}=\sum_{l_{1}=1}^{n} \ldots \sum_{l_{q-1}=1}^{n} \prod_{m=1}^{q} f_{l_{m}}^{\prime}\left(n e t_{l_{m}}(t-m)\right) w_{l_{m} l_{m-1}}
     \eqcite{hochreiter1997long}
-    \label{equ:2-RNN-loss-scaled}
+    \label{eq:2-RNN-loss-scaled}
 \end{equation}
 
-Formula \ref{equ:2-RNN-loss-scaled} shows that the back-propagation gradient in simple RNN is equal to the product of the gradients of each time step after multi-step propagation.
+Equation \ref{eq:2-RNN-loss-scaled} shows that the back-propagation gradient in simple RNN is equal to the product of the gradients of each time step after multi-step propagation.
 An intuitive explanation is that the gradient is mainly dominated by the short-distance gradient, and thus it is difficult for the model to learn long-distance dependence.
 
 Long-short-term memory (LSTM) was proposed to solve the problem that the simple RNN cannot learn long-term dependence by introducing a separated cell state $C_t$ to keep long-term memory. And later on, \citet{Gers2000LearningTF} introduced I/O gates, a forget gate to control loss or keep memory in cell state, resulted in the modern LSTM cell structure shown in the left of Figure \ref{fig:ext-LSTM-GRU}.

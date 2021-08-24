@@ -103,6 +103,7 @@ ID & Activity    & Alert level & Description \\ \hline
 \end{table}
 
 \subsection{Loss function and training hyperparameters}
+\label{subsec:Loss function and training hyperparameters}
 The categorical crossentropy loss is a commonly used loss function in classification tasks.
 In TensorFlow, if the labels is in one-hot representation, \textit{CategoricalCrossentropy} loss should be used.
 In the case of labels provided as integers, \textit{SparseCategoricalCrossentropy} should be used.
@@ -112,19 +113,18 @@ Many hyperparameters are involved in the deep model training process, where the 
 The process of training any deep model involves two important hyperparameters, batch size and learning rate.
 The batch size represents the number of samples input to the model in each iteration.
 The learning rate represents the update factor of the model weight moving toward a minimum of the loss function.
-A larger batch size allows the trainer to better calculate the backpropagation gradient with more samples, where appropriately increasing the learning rate can make the model converge faster.
+A larger batch size allows the trainer to better calculate the back-propagation gradient with more samples, where appropriately increasing the learning rate can make the model converge faster.
 A too-large learning rate will cause an oscillating loss value making the model difficult to converge.
 Conversely, a too-small learning rate will slow down the training process and make the optimiser easier to get stuck at saddle points.
 
-\begin{wrapfigure}{r}{.6\textwidth}
-    \vspace*{-1.2em}
-    \centering
-    \includegraphics[width=.6\textwidth]{design/imgs/3-lr-warmup.pdf}
-    \caption{Learning rate warm-up}
-    \label{fig:3-lr-warmup}
-\end{wrapfigure}
-
-Because the Transformer has high versatility and low inductive bias than CNN, many previous studies have shown that learning rate warm-up is an effective and necessary design to prevent overfitting when training Transformer-based deep networks.
+Because the Transformer has high versatility and low inductive bias than CNN, many previous studies have shown that learning rate warm-up is an effective and necessary design to prevent over-fitting when training Transformer-based deep networks.
 An intuitive explanation for the learning rate warm-up is that the model knows nothing about the data attributes and distribution at the beginning of training.
-Using a large learning rate at the beginning will cause the model to overfit the first few samples immediately, making it hard to remedy it in the subsequent training steps.
-Figure \ref{fig:3-lr-warmup} illustrates the learning rate scheduler function to apply the warm-up pattern in the training process.
+Using a large learning rate at the beginning will cause the model to over-fit the first few samples immediately, making it hard to remedy it in the subsequent training steps.
+
+Equation \ref{eq:lr-schedule} shows the learning rate scheduler function, where $d_{model}$ defines the maximum learning rate applicable to the model complexity, and $step\_num$ defines the number of iterations to reach the peak learning rate.
+
+\begin{equation}
+    lrate=d_{model}^{-0.5} * \min \left(step\_num^{-0.5}, step\_num \cdot  warmup\_steps^{-1.5}\right)
+    \eqcite{vaswani2017attention}
+    \label{eq:lr-schedule}
+\end{equation}

@@ -13,24 +13,24 @@ The first version of the proposed model uses sequential convolutional layered ar
 \end{figure}
 
 The depthwise separable convolution splits the standard convolution into two operations, depthwise convolution (Figure \ref{fig:ext-2-mobile-depth-point-atrous} (a)) and pointwise convolution (Figure \ref{fig:ext-2-mobile-depth-point-atrous} (b)) respectively.
-In detail, Formula \ref{equ:2-standard-conv} expresses the calculation of standard convolution, and it has the computational cost of $D_K \cdot D_K \cdot M \cdot N \cdot D_F \cdot D_F$, where $M$ and $N$ denote the number of input and output channels; $D_K$ and $D_F$ denote the dimension of kernels and feature maps.
+In detail, Formula \ref{eq:2-standard-conv} expresses the calculation of standard convolution, and it has the computational cost of $D_K \cdot D_K \cdot M \cdot N \cdot D_F \cdot D_F$, where $M$ and $N$ denote the number of input and output channels; $D_K$ and $D_F$ denote the dimension of kernels and feature maps.
 
 \begin{minipage}[!ht]{.48\textwidth}
 \begin{equation}
     \mathbf{G}_{k, l, n}=\sum_{i, j, m} \mathbf{K}_{i, j, m, n} \cdot \mathbf{F}_{k+i-1, l+j-1, m}
     \eqcite{howard2017mobilenets}
-    \label{equ:2-standard-conv}
+    \label{eq:2-standard-conv}
 \end{equation}
 \end{minipage}
 \begin{minipage}[!ht]{.48\textwidth}
 \begin{equation}
     \hat{\mathbf{G}}_{k, l, m}=\sum_{i, j} \hat{\mathbf{K}}_{i, j, m} \cdot \mathbf{F}_{k+i-1, l+j-1, m}
     \eqcite{howard2017mobilenets}
-    \label{equ:2-depthwise-conv}
+    \label{eq:2-depthwise-conv}
 \end{equation}
 \end{minipage}
 
-Formula \ref{equ:2-depthwise-conv} shows that depthwise convolution uses only one convolution kernel for each channel, and there is one to one map from each input channel to each output channel, thus the computational cost is $D_K \cdot D_K \cdot M \cdot D_F \cdot D_F$.
+Formula \ref{eq:2-depthwise-conv} shows that depthwise convolution uses only one convolution kernel for each channel, and there is one to one map from each input channel to each output channel, thus the computational cost is $D_K \cdot D_K \cdot M \cdot D_F \cdot D_F$.
 The pointwise convolution is a standard convolution with kernel size of $1\times1$ that perform a combination of the inputs along the channel direction, so the computational cost is $M \cdot N \cdot D_F \cdot D_F$.
 By comparing computational cost formulae, total deduction for depthwise separable convolution is $\frac{1}{N}+\frac{1}{D_{K}^{2}}$.
 

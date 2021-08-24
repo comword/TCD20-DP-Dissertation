@@ -72,7 +72,7 @@ $STOP \gets false$\;
     $l$[][] $\gets FacemarkLBF::fit(p_{half}, f$[]$)$\;
     \For{$i \gets 0$ \KwTo $sizeof\ f$[]}{
     $p_{anonymous} \gets drawCover(p_{bgr}, f$[$i$]$)$\;
-    $p_{anonymous} \gets drawLandmark(p_{anonymous}, l$[$i$][]$)$\;
+    $p_{anonymous} \gets drawLandmarks(p_{anonymous}, l$[$i$][]$)$\;
     }
     $p_{rgba} \gets cvtColor(p_{anonymous}, BGR2RGBA)$\tcp*{ANativeWindow requires image in RGBA format}
     $enqueue(displayQueue, p_{rgba})$\tcp*{Enqueue to display thread}
