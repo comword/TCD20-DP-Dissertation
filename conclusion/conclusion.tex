@@ -1,19 +1,46 @@
 \chapter{Conclusion}
 \label{chap:Conclusion}
 % 1 page discussion and summary, 1 page possible future works
-In the previous section, each part of the system was evaluated with some key result data listed in tables.
-This section will discuss on the results to draw research conclusions and propose some possible future works in this field.
+The previous chapters have outlined each part of the system from the design and implementation aspects.
+The evaluation chapter has shown and critically analysed the experiment results of the deep model evaluation and the mobile application performance in multiple evaluation metrics.
+This chapter will summarise the evaluation results and draw research conclusions regarding the research question and propose possible future work in this field.
 
-Limitation
+% Summary
+The evaluation results have verified the research question that it is possible to classify the exam attendee's activities into approved or prohibited behaviours using an on-device camera video input stream.
+Through my enormous efforts contributed to this research project and dissertation, I have completed this study and summarised my contributions to the following points.
+
+\begin{itemize}[leftmargin=1em]
+    \setlength\itemsep{-.5em}
+    \item This study spots an urgent need during the COVID-19 epidemic on a human action recognition task -- the remote exam invigilation.
+    \item This research surveys and reviews previous research on the design details and mobile optimisation insights of many related deep models.
+    \item This study designs and implements a web-based app to collect labelled video data from research participants.
+    \item This study designs and implements a deep model to accomplish the research goal by applying the deep-learning-based video understanding technique.
+    \item This study ports and optimises the proposed deep model to Android mobile devices, which validates the feasibility of running the app equipped with the deep model.
+    \item This study evaluates the proposed deep model in multiple metrics and conducts performance experiments on two Android phone models, OnePlus 5 and OnePlus 8.
+\end{itemize}
+
+The solution proposed in this research only solves remote exam invigilation in physical space, ensured exam attendees only interact with the device used to sit the exam.
+The limitation of the solution lies in the inability of controlling software on the personal device.
+For example, a dishonest student can use remote desktop software to enable impersonation, letting others cheat for the exam through the Internet. 
+Because the dishonest student does not do any prohibited activities in the physical space, the solution does not apply to this situation.
 
 % Future works
-Future works
+As for future work, the possible future research directions in the field of remote examination invigilation are considered based on the project outcomes shown above, which is mainly four directions -- data set volume, deep model optimisation for both model architecture and mobile devices, integration with online exam platforms and areas of security and privacy.
+The first two of these research directions are pushing forward the deep model performance.
+And the last two directions are considering more user experience engineering or related to security and privacy, which is beyond the research scope of deep learning.
 
-To increase the data set volume.
+In detail, the first enhancement direction is generally effective to any deep models, that is, to increase the total data set volume.
+The evaluation result unveils that the deep model still has the potential and capacity to train on larger data sets.
+Future research can integrate data collection into the mobile app and continuously improve the model to adapt to various video angles.
 
-To further optimise the deep model.
-New ideas of factorisation from ViViT proposed by \citet{arnab2021vivit}.
-In 2021 Augest, as this dissertation is about to be completed, \citet{chen2021mobileformer} proposes a Mobile-Former that bridges MobileNet and Transformer.
+The second way of improving the system performance is to further optimise the deep model on the accuracy and computational complexity.
+Factorised model variants used in Video Vision Transformer network proposed by \citet{arnab2021vivit} pointed out a method to further enhance the performance of deep models designed for video understanding tasks.
+The idea behind the factorisation is to decompose the monolithic structure of the spatial encoder first and then the temporal encoder into more and smaller encoders distributed in layers.
+More communications and fusions between spatial and temporal data facilitates the model to capture richer features across spatiotemporal space.
 
-To try more deep learning frameworks
-A deep learning library for video understanding research\footnote{PyTorchVideo: \url{https://github.com/facebookresearch/pytorchvideo}}
+In 2021 August, as this dissertation is about to be completed, \citet{chen2021mobileformer} proposed a Mobile-Former that bridges MobileNet and Transformer.
+They creatively proposed a parallel design of MobileNet and Transformer, interspersed with the bidirectional fusion of ``MobileNet at local processing and Transformer at global interaction'', which takes the advantages of both convolution and Transformer to achieve \textit{mutuo auxilio}.
+Future works may use the Mobile-Former to achieve better computational efficiency and more representation power.
+Besides, more deep learning frameworks are worth trying out in the model implementation.
+For example, \citet{reiss2020pytorch} presented that PyTorch used TorchScript to enable running on mobile devices and supported NNAPI by the end of 2020.
+On this basis, A deep learning library for video understanding research\footnote{PyTorchVideo: \url{https://github.com/facebookresearch/pytorchvideo}} is published during this research period and is worth trying in future work.
