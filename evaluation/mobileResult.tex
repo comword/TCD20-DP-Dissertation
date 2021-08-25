@@ -1,7 +1,9 @@
 \section{Mobile app evaluation}
 \label{sec:Mobile app evaluation}
 Since this study has the research scope of mobile platforms, experimenting with computation performance evaluation is necessary to show the deep model is optimised to run inference on mobile devices.
-Table \ref{tab:Experiment results on mobile devices} shows the hardware details with the experiment results of frame rates expressed in frames per second (FPS).
+The experiment in this research uses two mobile phone models from OnePlus.
+The first is the OnePlus 5, a bit old phone released in June 2017, and the second is the OnePlus 8, one of the top phones from last year, unveiled on April 14, 2020.
+Table \ref{tab:Experiment results on mobile devices} shows the hardware details of these phones with the experiment results of average frame rate expressed in frames per second (FPS) metric.
 
 \begin{table}[!htbp]
 \renewcommand{\arraystretch}{1.4}
@@ -9,10 +11,17 @@ Table \ref{tab:Experiment results on mobile devices} shows the hardware details 
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
 \textbf{Device} & \textbf{SoC}   & \textbf{CPU} & \textbf{Process} & \textbf{Accelerator} & \textbf{RAM} & \textbf{FPS} \\ \hline
-OnePlus 5       & Snapdragon 835 & \begin{tabular}[c]{@{}c@{}}Kyro 280\\ 2.46 GHz\end{tabular} & 10nm             & \begin{tabular}[c]{@{}c@{}}Adreno 540 GPU\\ Hexagon 682 DSP\end{tabular} & 8GB & 18 \\ \hline
-OnePlus 8       & Snapdragon 865 & \begin{tabular}[c]{@{}c@{}}Kyro 585\\ 2.84 GHz\end{tabular} & 7nm              & \begin{tabular}[c]{@{}c@{}}Adreno 650 GPU\\ Hexagon 698 DSP\end{tabular} & 12GB & 28 \\ \hline
+OnePlus 5       & Snapdragon 835 & \begin{tabular}[c]{@{}c@{}}Kyro 280\\ 2.46 GHz\end{tabular} & 10nm             & \begin{tabular}[c]{@{}c@{}}Adreno 540 GPU\\ Hexagon 682 DSP\end{tabular} & 8GB & \textbf{18} \\ \hline
+OnePlus 8       & Snapdragon 865 & \begin{tabular}[c]{@{}c@{}}Kyro 585\\ 2.84 GHz\end{tabular} & 7nm              & \begin{tabular}[c]{@{}c@{}}Adreno 650 GPU\\ Hexagon 698 DSP\end{tabular} & 12GB & \textbf{28} \\ \hline
 \end{tabular}
 \caption{Experiment results on mobile devices}
 \label{tab:Experiment results on mobile devices}
 \end{table}
 
+The result from the OnePlus 8 shows that the mobile app runs fast and smoothly on the high-end phone manufactured last year.
+Therefore, from 2021 and in the future, there will be no hardware performance barriers for mobile phones to running the deep model implemented in this study.
+
+As for the result from the OnePlus 5, an old mobile phone released four years ago, the frame rate result is lower than the result from the OnePlus 8.
+Although users of old mobile phones may feel that the camera display in the app is a little lag and delayed, it does not crash or affect the user operation, UI response effect and the deep model inference because of the well-designed multi-threading architecture in the mobile app.
+Besides, exam attendees should not stare at or operate the invigilating mobile phone during the exam, slight lag and delay in the camera display affect nothing in the practical use case.
+As a result, a little old phones should be able to run the app as well.

@@ -85,35 +85,44 @@ During the training process, the loss of the training data set is always droppin
 \end{figure}
 
 Figure \ref{fig:5-confusion_matrix_val} and Figure \ref{fig:5-confusion_matrix_train} shows two confusion matrices on validation and training data set, respectively.
+It is clear that most of samples are on the diagonal of the matrices, which means that they are classified correctly in both training and validation data set.
+The validation result vitally reflects the model performance on samples that have not been used in the training process.
 
-Table \ref{tab:Test classification report} shows a classification report of the validation data set on the evaluation metrics introduced in Section \ref{sec:Evaluation metrics}.
+According to the formulae introduced in the evaluation metrics section \ref{sec:Evaluation metrics} above, Table \ref{tab:Classification report} shows a classification report of the validation data on Average Accuracy; Precision, Recall and F1-Score on macro average.
+For those categories where precision and recall are 1.00, all samples in those categories are correctly classified.
+This classification report highlights two data insights, first is that some samples from the Unknown category are classified to the other categories of exam activity, especially for the Leave category 5; second is that some samples labelled with 10 Drinking are classified to the 9 Scratching category.
 
 \begin{table}[!htbp]
 \centering
 \begin{tabular}{|l|c|c|c|c|}
 \hline
               & Precision & Recall & F1-Score & Support \\ \hline
-0 Unknown     & 1.00      & 0.97   & 0.98     & 301     \\ \hline
+0 Unknown     & 1.00      & \textbf{0.97}   & 0.98     & 301     \\ \hline
 1 Look screen & 0.99      & 1.00   & 0.99     & 189     \\ \hline
 2 Look down   & 1.00      & 1.00   & 1.00     & 89      \\ \hline
 3 Look side   & 1.00      & 1.00   & 1.00     & 64      \\ \hline
 4 Look back   & 1.00      & 1.00   & 1.00     & 31      \\ \hline
-5 Leave       & 0.87      & 0.94   & 0.90     & 35      \\ \hline
+5 Leave       & \textbf{0.87}      & \textbf{0.94}   & 0.90     & 35      \\ \hline
 6 Speaking    & 1.00      & 1.00   & 1.00     & 75      \\ \hline
 7 Look up     & 1.00      & 1.00   & 1.00     & 32      \\ \hline
 8 Use phone   & 0.98      & 1.00   & 0.99     & 122     \\ \hline
-9 Scratching  & 1.00      & 0.75   & 0.86     & 28      \\ \hline
-10 Drinking   & 0.83      & 1.00   & 0.91     & 39      \\ \hline
+9 Scratching  & 1.00      & \textbf{0.75}   & 0.86     & 28      \\ \hline
+10 Drinking   & \textbf{0.83}      & 1.00   & 0.91     & 39      \\ \hline
 11 Typing     & 1.00      & 1.00   & 1.00     & 22      \\ \hline
 Accuracy      & \multicolumn{3}{c|}{0.98}     & 1027    \\ \hline
 macro avg     & 0.97      & 0.97   & 0.97     & 1027    \\ \hline
 weighted avg  & 0.98      & 0.98   & 0.98     & 1027    \\ \hline
 \end{tabular}
-\caption{Test classification report of validation data set}
-\label{tab:Test classification report}
+\caption{Classification report of validation data set}
+\label{tab:Classification report}
 \end{table}
 
-The Unknown category has more false-negative results than the others, which means that some videos from the Unknown category were classified into the categories of exam activity.
+As for the first data insight, the Unknown category has more false-negative results than the others, which means that some videos from the Unknown category were classified into the categories of exam activity.
 Different proportions of the Unknown category to the exam activity categories will change the willingness of predicting the Unknown category.
 In this study, the ratio of Unknown category size and the size of the total exam activity categories is $\frac{2940}{1210} = 0.42$.
 In future works, more samples can be added into the Unknown category in the training data set to reduce false negatives in this category.
+
+The second data insight is the misclassification between category 9 and category 10.
+This problem is mainly due to insufficient training data and a certain similarity in these two categories.
+For example, in both scratching and drinking activities, the participant needs to raise their hand first, do an action covering the face, and finally put their hand down.
+If more training data is available in future work, the performance of these two categories can be easily improved.
