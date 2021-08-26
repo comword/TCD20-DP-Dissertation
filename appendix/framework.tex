@@ -1,11 +1,17 @@
-\section{Framework selection}
-\label{sec:Framework selection}
+\makeatletter
+\let\savedchap\@makechapterhead
+\def\@makechapterhead{\vspace*{-2.8cm}\savedchap}
+\chapter{Framework details}
+\let\@makechapterhead\savedchap
+\makeatother
+\vspace*{-1em}
+\label{chap:Framework details}
 % 3.5 pages
 Because the scope of this research is relatively wide, covering data collection, model implementation, and mobile app implementation, many frameworks and libraries are used in implementing the system.
 Obviously, depending on target platforms, the programming language used in each part is also different.
 The next subsections will introduce both programming languages and frameworks used to develop the corresponding subsystem.
 
-\subsection{Web development}
+\section{Web development}
 Web technology is developing and advancing rapidly, which is the reason for the extensive use of web technology in this study.
 From the earliest era of directly programming HTML, CSS, and JavaScript, the web technology developed through templated server-side-rendering, such as PHP Hypertext Preprocessor or Jakarta Server Pages (JSP).
 Recently, web development has become more structured and engineered by using client-side rendering framework for front-end, such as React, Vue or Angular and microservice framework for back-end.
@@ -28,7 +34,7 @@ As for Redux, it is a predictable state container for JavaScript applications al
 It helps create applications that behave consistently and predictably with complicated states, and keeps the states and connects each state with views in React.
 Any action that causes change to the state is reversible with a time-travelling debugger, which provides a great developing experience.
 
-\subsection{Deep learning model development}
+\section{Deep learning model development}
 In the field of deep learning, TensorFlow and PyTorch are two famous and widely used frameworks.
 They both support the use of GPU for acceleration in the model training process, but there are still many differences in programming paradigm and application areas.
 
@@ -55,7 +61,7 @@ The experiment result also shows that TensorFlow Lite with NNAPI delegate achiev
 
 In order to maximise the performance and computational efficiency, this study implements the deep learning model using the TensorFlow framework because the target deployment platform is the Android mobile devices, and TensorFlow Lite has the best compatibility and support for Android.
 
-\subsection{Android application development}
+\section{Android application development}
 As an early and widely used deep learning framework, TensorFlow has a mature deployment process and application example on mobile devices.
 For example, \citet{fadlilah2021development} developed an Android app for sign language by using TensorFlow Lite to run a convolutional neural network.
 This framework not only has a large number of successful application precedents but also has detailed documents, books, and tutorials.

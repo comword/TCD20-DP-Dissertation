@@ -1,0 +1,27 @@
+\begin{landscape}
+\makeatletter
+\let\savedchap\@makechapterhead
+\def\@makechapterhead{\vspace*{-2.8cm}\savedchap}
+\chapter{Evaluation result}
+\let\@makechapterhead\savedchap
+\makeatother
+\vspace*{-1em}
+\label{chap:Evaluation result}
+\begin{minipage}{.715\textwidth}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{evaluation/imgs/5-confusion_matrix_val.pdf}
+    \caption{Confusion matrix on validation data set}
+    \label{fig:5-confusion_matrix_val}
+\end{figure}
+\end{minipage}
+\hspace{.8em}
+\begin{minipage}{.715\textwidth}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{evaluation/imgs/5-confusion_matrix_train.pdf}
+    \caption{Confusion matrix on training data set}
+    \label{fig:5-confusion_matrix_train}
+\end{figure}
+\end{minipage}
+\end{landscape}

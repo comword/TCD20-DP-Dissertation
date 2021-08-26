@@ -24,7 +24,7 @@ It is worth noting that the diagonal elements starting from the upper left corne
 The binary classification problem has many evaluation metrics calculated using the four values in the confusion matrix, such as accuracy, accuracy, and recall.
 In order to adopt these metrics in multi-classification problems, a common solution is to convert it into $n$ numbers of binary classification problems, that is, for a certain category, samples that are correctly classified as that category are True Positive, and samples that are correctly classified as not that category are True Negative.
 In multi-classification problems, the definition of some metrics have expanded to allow different ways of averaging.
-Table \ref{tab:The evaluation metrics} illustrates widely used evaluation metrics summarised by \citet{foss2018multiclass} under multi-classification model evaluation scenario, where $M$ and $\mu$ denotes macro- and micro-averaging respectively.
+Table \ref{tab:The evaluation metrics} illustrates widely used evaluation metrics summarised by \citet{foss2018multiclass} under multi-classification model evaluation scenario, where $M$ denotes macro-averaging.
 
 \begin{table}[!htbp]
 \renewcommand{\arraystretch}{1.8}
@@ -37,9 +37,9 @@ Average accuracy & \vspace{1em}$\begin{aligned}\frac{1}{k}\sum_{i=1}^{k} \frac{T
 Precision$_M$ & $\begin{aligned}\frac{1}{k}\sum_{i=1}^{k} \frac{TP_{i}}{TP_{i}+FP_{i}}\end{aligned}$ & For each category, calculate the precision separately, and then take the average. \\
 Recall$_M$ & $\begin{aligned}\frac{1}{k}\sum_{i=1}^{k} \frac{TP_{i}}{TP_{i}+FN_{i}}\end{aligned}$ & For each category, calculate the recall separately, and then take the average, showing the average per-class effectiveness of a classifier to identify labels. \\
 F1-score$_M$ & $\begin{aligned}\frac{2 \times \text{Precision}_{M} \times \text{Recall}_{M}}{\text {Precision}_{M}+\text{Recall}_{M}}\end{aligned}$ & The harmonic mean of the macro-average precision and recall. \\
-Precision$_\mu$ & $\begin{aligned}\frac{\sum_{i=1}^{k} TP_{i}}{\sum_{i=1}^{k}\left(TP_{i}+FP_{i}\right)}\end{aligned}$ & Add TP and FP across all categories together and calculate the precision once. \\
-Recall$_\mu$ & $\begin{aligned}\frac{\sum_{i=1}^{k} TP_{i}}{\sum_{i=1}^{k}\left(TP_{i}+FN_{i}\right)}\end{aligned}$ & Add TP and FN across all categories together and calculate the recall once. \\
-F1-score$_\mu$ & $\begin{aligned}\frac{2 \times \text{Precision}_{\mu} \times \text{Recall}_{\mu}}{\text {Precision}_{\mu}+\text{Recall}_{\mu}}\end{aligned}$ & The harmonic mean of the micro-average precision and recall. \\
+%Precision$_\mu$ & $\begin{aligned}\frac{\sum_{i=1}^{k} TP_{i}}{\sum_{i=1}^{k}\left(TP_{i}+FP_{i}\right)}\end{aligned}$ & Add TP and FP across all categories together and calculate the precision once. \\
+%Recall$_\mu$ & $\begin{aligned}\frac{\sum_{i=1}^{k} TP_{i}}{\sum_{i=1}^{k}\left(TP_{i}+FN_{i}\right)}\end{aligned}$ & Add TP and FN across all categories together and calculate the recall once. \\
+%F1-score$_\mu$ & $\begin{aligned}\frac{2 \times \text{Precision}_{\mu} \times \text{Recall}_{\mu}}{\text {Precision}_{\mu}+\text{Recall}_{\mu}}\end{aligned}$ & The harmonic mean of the micro-average precision and recall. \\
 \hline
 \end{tabularx}
 \caption{The evaluation metrics, the formulae are summarised by \citet{foss2018multiclass}}

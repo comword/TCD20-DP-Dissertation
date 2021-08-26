@@ -44,7 +44,10 @@ This position number will be used as position embedding in the temporal backbone
 A larger number of frames in one iteration can give more data to the model, improve the accuracy and the ability to predict long-term activities, but it also requires longer capture time and computing resources.
 To strike a balance between the model performance and resources required, I define the number of frames and frame positions in each iteration to be 16 in this study.
 
-\subsection{The spatial and temporal backbone in the model}
+\subsection{The model architecture}
+After the data loader converts the input data into a suitable format for the input layer, the next step is to select a spatial backbone and a temporal backbone, then design a data flow to connect them in the model architecture.
+The block flowchart in Figure \ref{fig:3-model-dataflow} shows the data flow from the input layer through spatial and temporal deep networks to the final category possibility output.
+
 \begin{wrapfigure}[19]{r}{.32\textwidth}
     \vspace*{-1.2em}
     \centering
@@ -53,9 +56,6 @@ To strike a balance between the model performance and resources required, I defi
     \label{fig:3-model-dataflow}
 \end{wrapfigure}
 
-After the data loader converts the input data into a suitable format for the input layer, the next step is to select a spatial backbone and a temporal backbone, then design a data flow to connect them in the model architecture.
-The block flowchart in Figure \ref{fig:3-model-dataflow} shows the data flow from the input layer through spatial and temporal deep networks to the final category possibility output.
-
 As for the spatial backbone, this research uses a minimal EfficientNet-B0 backbone pre-trained on the ImageNet data set to do spatial feature extraction from frames.
 The detail and evolution history of EfficientNet is reviewed in subsection  \ref{subsec:Evolution from MobileNet to EfficientNet}.
 To summary, it is a further optimisation from MobileNet, also a CNN deep network designed for mobile devices.
@@ -63,44 +63,14 @@ To summary, it is a further optimisation from MobileNet, also a CNN deep network
 As for the temporal backbone, Longformer is used in this research as a temporal encoder with global attention in \textit{[CLS] token} and local sliding window attention pattern.
 In subsection \ref{subsec:Optimisation of Transformer Networks}, many previous studies have pointed out the high computational complexity of the self-attention mechanism in Transformer, and proposed corresponding improvements to facilitate running on mobile devices.
 
-\subsection{Output layer and data format}
 The output layer receives hidden states of the \textit{[CLS] token} from the Transformer-based temporal encoder and outputs the normalised category probability.
 This research uses two fully connected dense layers as the multiple layer perceptron classification header reviewed in Figure \ref{fig:ext-vtn}, Video Transformer Network architecture.
 
 The output dimension of the first dense layer is equal to the output shape of the temporal encoder, and a Gaussian Error Linear Unit (GELU) is used for nonlinear activation mapping.
 The final output layer dimension of the model is the number of classification categories.
 
-In this study, considering the difficulty of data set collection, 12 activities were designed in Table \ref{tab:Model output}, covering the common types of remote exams.
+In this study, considering the difficulty of data set collection, 12 activities were designed in \ref{sec:Output categories} Table \ref{tab:Model output}, covering the common types of remote exams.
 This table also contains related descriptions and predefined risk levels for each activity, expressed in three alert levels.
-
-\begin{table}[!ht]
-\renewcommand{\arraystretch}{1.1}
-\definecolor{caribbeangreen}{rgb}{0.0, 0.8, 0.6}
-\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
-\definecolor{carminered}{rgb}{1.0, 0.0, 0.22}
-\newcommand{\green}{\color{caribbeangreen} Green}
-\newcommand{\amber}{\color{amber} Amber}
-\newcommand{\red}{\color{carminered} Alert}
-\begin{tabularx}{\textwidth}{|c|c|c|X|}
-\hline
-ID & Activity    & Alert level & Description \\ \hline
-0           & Unknown     & \amber & The model cannot predict the current activity that may be a non-exam activity \\ \hline
-1           & Look screen & \green & The student is looking at the screen \\ \hline
-2           & Look down   & \red   & The student is looking under the table, which maybe using the phone \\ \hline
-3           & Look side   & \amber & The student is looking outside the computer screen, maybe reading a book on the table \\ \hline
-4           & Look back   & \amber & The student turned and is looking behind, maybe hiding something \\ \hline
-5           & Leave       & \amber & The student is out of the camera range \\ \hline
-6           & Speaking    & \red   & The student has obvious lip movement and is talking to others \\ \hline
-7           & Look up     & \green & The student looks up at the ceiling, may be relaxing or thinking a difficult question \\ \hline
-8           & Use phone   & \red   & The student are obviously using a mobile phone \\ \hline
-9           & Scratching  & \green & The student is scratching the head or face and may be thinking a difficult question \\ \hline
-10          & Drinking    & \green & The student is drinking water \\ \hline
-11          & Typing      & \green & The student is typing on the keyboard and answering exam questions \\ \hline
-12 -- 15    & Unused      & --     & Allow for adding more activities \\ \hline
-\end{tabularx}
-\caption{Model output for exam activity categories}
-\label{tab:Model output}
-\end{table}
 
 \subsection{Loss function and training hyperparameters}
 \label{subsec:Loss function and training hyperparameters}
@@ -128,3 +98,5 @@ Equation \ref{eq:lr-schedule} shows the learning rate scheduler function, where 
     \eqcite{vaswani2017attention}
     \label{eq:lr-schedule}
 \end{equation}
+
+TODO, design conclusion

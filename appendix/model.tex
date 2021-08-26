@@ -1,13 +1,39 @@
-% \makeatletter
-% \let\savedchap\@makechapterhead
-% \def\@makechapterhead{\vspace*{-2cm}\savedchap}
-% \chapter{Model structure}
-% \let\@makechapterhead\savedchap
-% \makeatother
-% \vspace*{-3em}
 \chapter{Model design details}
-\label{chap:Model design details}
+\section{Output categories}
+\label{sec:Output categories}
+\begin{table}[!ht]
+\renewcommand{\arraystretch}{1.6}
+\definecolor{caribbeangreen}{rgb}{0.0, 0.8, 0.6}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{carminered}{rgb}{1.0, 0.0, 0.22}
+\newcommand{\green}{\color{caribbeangreen} Green}
+\newcommand{\amber}{\color{amber} Amber}
+\newcommand{\red}{\color{carminered} Alert}
+\begin{tabularx}{\textwidth}{|c|c|c|X|}
+\hline
+ID & Activity    & Alert level & Description \\ \hline
+0           & Unknown     & \amber & The model cannot predict the current activity that may be a non-exam activity \\ \hline
+1           & Look screen & \green & The student is looking at the screen \\ \hline
+2           & Look down   & \red   & The student is looking under the table, which maybe using the phone \\ \hline
+3           & Look side   & \amber & The student is looking outside the computer screen, maybe reading a book on the table \\ \hline
+4           & Look back   & \amber & The student turned and is looking behind, maybe hiding something \\ \hline
+5           & Leave       & \amber & The student is out of the camera range \\ \hline
+6           & Speaking    & \red   & The student has obvious lip movement and may be talking to others \\ \hline
+7           & Look up     & \green & The student looks up at the ceiling, may be relaxing or thinking a difficult question \\ \hline
+8           & Use phone   & \red   & The student are obviously using a mobile phone \\ \hline
+9           & Scratching  & \green & The student is scratching the head or face and may be thinking a difficult question \\ \hline
+10          & Drinking    & \green & The student is drinking water \\ \hline
+11          & Typing      & \green & The student is typing on the keyboard and answering exam questions \\ \hline
+12 -- 15    & Unused      & --     & Allow for adding more activities \\ \hline
+\end{tabularx}
+\caption{Model output for exam activity categories}
+\label{tab:Model output}
+\end{table}
+
+\section{Model detailed layers}
+\label{sec:Model detailed layers}
 \setlength\LTleft{-1em}
+\renewcommand*{\arraystretch}{0.9}
 \begin{longtable}{llll}
 \toprule
                        Name &                   Type &                           Output Shape &  Param \# \\

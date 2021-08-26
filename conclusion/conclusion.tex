@@ -1,11 +1,17 @@
+\makeatletter
+\let\savedchap\@makechapterhead
+\def\@makechapterhead{\vspace*{-2.5cm}\savedchap}
 \chapter{Conclusion}
+\let\@makechapterhead\savedchap
+\makeatother
+\vspace*{-1em}
 \label{chap:Conclusion}
 % 1 page discussion and summary, 1 page possible future works
 The previous chapters have outlined each part of the system from the design and implementation aspects.
 The evaluation chapter has shown and critically analysed the experiment results of the deep model evaluation and the mobile application performance in multiple evaluation metrics.
 This chapter will summarise the evaluation results and draw research conclusions regarding the research question and propose possible future work in this field.
 
-% Summary
+\section{Summary}
 The evaluation results have verified the research question that it is possible to classify the exam attendee's activities into approved or prohibited behaviours using an on-device camera video input stream.
 Through my enormous efforts contributed to this research project and dissertation, I have completed this study and summarised my contributions to the following points.
 
@@ -24,7 +30,7 @@ The limitation of the solution lies in the inability of controlling software on 
 For example, a dishonest student can use remote desktop software to enable impersonation, letting others cheat for the exam through the Internet. 
 Because the dishonest student does not do any prohibited activities in the physical space, the solution does not apply to this situation.
 
-% Future works
+\section{Future work}
 As for future work, the possible future research directions in the field of remote examination invigilation are considered based on the project outcomes shown above, which is mainly four directions -- data set volume, deep model optimisation for both model architecture and mobile devices, integration with online exam platforms and areas of security and privacy.
 The first two of these research directions are pushing forward the deep model performance.
 And the last two directions are considering more user experience engineering or related to security and privacy, which is beyond the research scope of deep learning.
@@ -39,7 +45,7 @@ The idea behind the factorisation is to decompose the monolithic structure of th
 More communications and fusions between spatial and temporal data facilitates the model to capture richer features across spatiotemporal space.
 
 In 2021 August, as this dissertation is about to be completed, \citet{chen2021mobileformer} proposed a Mobile-Former that bridges MobileNet and Transformer.
-They creatively proposed a parallel design of MobileNet and Transformer, interspersed with the bidirectional fusion of ``MobileNet at local processing and Transformer at global interaction'', which takes the advantages of both convolution and Transformer to achieve \textit{mutuo auxilio}.
+They creatively proposed a parallel design of MobileNet and Transformer, interspersed with the bidirectional fusion of ``MobileNet at local processing and Transformer at global interaction'', which takes the advantage \textit{de mutuo auxilio} (of mutual aid) from both convolution and Transformer.
 Future works may use the Mobile-Former to achieve better computational efficiency and more representation power.
 Besides, more deep learning frameworks are worth trying out in the model implementation.
 For example, \citet{reiss2020pytorch} presented that PyTorch used TorchScript to enable running on mobile devices and supported NNAPI by the end of 2020.

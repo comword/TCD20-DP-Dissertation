@@ -3,35 +3,14 @@
 This section introduces several key user logics and algorithms in the data collection web application.
 From the user's perspective, the data collection system mainly provides three user processes: new participant registration, participant login and the core function of participant recording and uploading, which are illustrated in Figure \ref{fig:4-webapp-user-register}, \ref{fig:4-webapp-user-login} and \ref{fig:4-webapp-user-record} respectively.
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=\textwidth]{implementation/imgs/4-webapp-user-register.pdf}
-    \caption{New participant registration}
-    \label{fig:4-webapp-user-register}
-\end{figure}
-
 Figure \ref{fig:4-webapp-user-register} shows the registration process for new participants.
 According to the research ethics, each participant needs to clearly understand the research content and provide consent before registering an account.
 Another worth mentioning is that the system will generate a random password in the registration process and send it to the email provided by the registrant.
 This registration process can prevent the system from collecting users' private passwords.
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=\textwidth]{implementation/imgs/4-webapp-user-login.pdf}
-    \caption{Registered participant login}
-    \label{fig:4-webapp-user-login}
-\end{figure}
-
 After the registration process, Figure \ref{fig:4-webapp-user-login} depicts the authentication process for registered participant.
 The participant will input the email address and the random password received during the registration process.
 If a participant forgot or lost the random password, he or she can request a new random password and restart the login process.
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=\textwidth]{implementation/imgs/4-webapp-user-record.pdf}
-    \caption{Participant recording and uploading}
-    \label{fig:4-webapp-user-record}
-\end{figure}
 
 Figure \ref{fig:4-webapp-user-record} shows the main workflow of the data collection app after the participant logs in.
 In the task selection stage, the web front-end first queries the currently available tasks from the back-end and display them in a list that participant can select.

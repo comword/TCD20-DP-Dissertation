@@ -5,11 +5,11 @@ While waiting for the data set to be collected, I designed the deep model as det
 After the design of the model is completed, the data loader and the deep model are implemented using Python programming language and TensorFlow framework.
 The implementation of EfficientNet (\textit{tf.keras.applications.efficientnet.EfficientNetB0}) and the MLP classification head (\textit{tf.keras.layers.Dense} and \textit{tf.keras.layers.Dropout}) is composed directly from the TensorFlow Keras-style high-level APIs.
 The Longformer implementation uses the Hugging Face Transformer\footnote{Hugging Face Transformers: \url{https://huggingface.co/transformers/}} library.
-The detail of each layer in the implemented model is shown in \ref{chap:Model design details}.
+The detail of each layer in the implemented model is shown in \ref{sec:Model detailed layers}.
 After finish implementing and training the deep model, the remaining research goal is to port the deep model to Android platform.
 
-Although the most widely used programming language for Android development is Java, this project does not use Java except for the automatically generated initialisation codes and native function bindings.
-As discussed in section \ref{sec:Framework selection}, the implementation uses React Native to develop UI and application logic.
+Although the most widely used programming language for Android development is Java, this project does not use Java except for the automatically generated initialisation codes and native function bindings,
+Instead, this study uses React Native to develop UI and application logic.
 Even though JavaScript development is more convenient, it is single-threaded and is not suitable for high performance parts in the application.
 For the parts that require high performance, such as the image pipeline, the anonymisation process, and the deep model inference process, the C++ programming language is used for multi-threaded Android native development.
 
@@ -21,7 +21,7 @@ These two parts use React Native Javascript Interface (JSI) for communication.
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\textwidth]{implementation/imgs/4-mobile-arch.pdf}
+    \includegraphics[width=.9\textwidth]{implementation/imgs/4-mobile-arch.pdf}
     \caption{Mobile app architecture and data flow}
     \label{fig:4-mobile-arch}
 \end{figure}
@@ -33,7 +33,7 @@ It can better take advantage of the multi-core of the mobile phone processor, an
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\textwidth]{implementation/imgs/4-model-infer.pdf}
+    \includegraphics[width=.9\textwidth]{implementation/imgs/4-model-infer.pdf}
     \caption{Sequence diagram of the multi-threaded app}
     \label{fig:4-model-infer}
 \end{figure}

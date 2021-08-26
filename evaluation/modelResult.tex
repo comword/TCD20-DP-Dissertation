@@ -40,12 +40,13 @@ Because this study uses a relatively small self-built data set and the deep mode
 The figure shows that the learning rate increases linearly and reaches the peak at the 2000\textsuperscript{th} iteration, which is defined as a hyperparameter in the model trainer.
 After the learning rate reaches its peak, it gradually decreases with a negative exponent, making the training process enter the final fine-tuning stage.
 
-\begin{figure}[!htbp]
+\begin{wrapfigure}{r}{.6\textwidth}
+    \vspace*{-1.2em}
     \centering
-    \includegraphics[width=.7\textwidth]{evaluation/imgs/5-lr-warmup.pdf}
+    \includegraphics[width=.6\textwidth]{evaluation/imgs/5-lr-warmup.pdf}
     \caption{Learning rate warm-up}
     \label{fig:5-lr-warmup}
-\end{figure}
+\end{wrapfigure}
 
 Figure \ref{fig:5-train-step} and Figure \ref{fig:5-val-steps} display the model training and validating iterations.
 At the beginning of the first epoch training, although the learning rate is low, the loss decreases steadily during this training epoch, indicating that the learning rate warm-up is effective to alleviate the overfitting.
@@ -70,21 +71,7 @@ During the training process, the loss of the training data set is always droppin
     \label{fig:5-val-steps}
 \end{figure}
 
-\clearpage
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=.75\textwidth]{evaluation/imgs/5-confusion_matrix_val.pdf}
-    \caption{Confusion matrix on validation data set}
-    \label{fig:5-confusion_matrix_val}
-\end{figure}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=.75\textwidth]{evaluation/imgs/5-confusion_matrix_train.pdf}
-    \caption{Confusion matrix on training data set}
-    \label{fig:5-confusion_matrix_train}
-\end{figure}
-
-Figure \ref{fig:5-confusion_matrix_val} and Figure \ref{fig:5-confusion_matrix_train} shows two confusion matrices on validation and training data set, respectively.
+\ref{chap:Evaluation result} Figure \ref{fig:5-confusion_matrix_val} and Figure \ref{fig:5-confusion_matrix_train} shows two confusion matrices on validation and training data set, respectively.
 It is clear that most of samples are on the diagonal of the matrices, which means that they are classified correctly in both training and validation data set.
 The validation result vitally reflects the model performance on samples that have not been used in the training process.
 
