@@ -99,4 +99,7 @@ Equation \ref{eq:lr-schedule} shows the learning rate scheduler function, where 
     \label{eq:lr-schedule}
 \end{equation}
 
-TODO, design conclusion
+There are many more hyperparameters other than the learning rate for the training process, but they are less important than hyperparameters that directly controlling the model complexity and the training process.
+For example, some hyperparameters used in data augmentation -- scaling factors, cropping ranges and possibilities for each augmentation operation.
+Stronger data augmentation can better prevent overfitting but may introduce more noises in the training process.
+To reduce the search space for hyperparameter fine-tuning, this study reviews the implementation of related researches to set those less important hyperparameters.
