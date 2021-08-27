@@ -4,7 +4,7 @@ After collecting videos uploaded by participants to create a video data set, dat
 The video encoding format defined in WebRTC specification is \textit{video/webm}, with three types of video codecs available in different browsers -- VP8, H.264, and the latest VP9 that supports lossless compression.
 Most of these video codecs use lossy compression to reduce the size of transmitted data, especially for online use cases.
 Although the lossy compression may change the video slightly, the alteration is too small to be distinguished, and the compressed video is visually original.
-Therefore, there is no useful data loss in the lossy compression progress.
+Therefore, there is no impactful data loss in the lossy compression progress.
 
 The compression reduces the size of transmitted data, but the side-effect is computation overhead in decompression.
 If the model data loader decodes the video data during the training process, it will consume lots of CPU during the decompression and anonymisation process.
